@@ -3,7 +3,7 @@
         xmlns:vm="using:ColorWar.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="250"
         x:Class="ColorWar.Views.NewGameWindow"
         Icon="/Assets/avalonia-logo.ico"
         Title="ColorWar" Width="400" Height="800" >
@@ -15,10 +15,36 @@
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
-    <Grid RowDefinitions="*,*,*,*" ColumnDefinitions="*,*,*,*" HorizontalAlignment="Center" >
-        <Label Margin="5 5" Content="Gridsize:" Grid.Row="0" Grid.Column="0"/>
-        <TextBox Margin="5 5" Name="XTextBox" Grid.Row="0" Grid.Column="1" Width="20" Height="20"/>
-        <Label Margin="5 5" Content="x" Grid.Row="0" Grid.Column="2"/>
-        <TextBox Margin="5 5" Name="YTextBox" Grid.Row="0" Grid.Column="3" Width="20" Height="20"/>
-    </Grid>
+    <Grid RowDefinitions="Auto,Auto,Auto,Auto">
+
+    
+        <StackPanel Orientation="Horizontal" Margin="10" Grid.Row="0" Spacing="5">
+            <Label Content="Gridsize:"/>
+            <TextBox Width="40"/>
+            <Label Content="x"/>
+            <TextBox Width="40"/>
+        </StackPanel>
+
+        
+        <StackPanel Orientation="Horizontal" Margin="10" Grid.Row="1" Spacing="10">
+            <Label Content="Player 1:" Width="70"/>
+            <TextBox Width="100"/>
+            <RadioButton Content="Red"/>
+            <RadioButton Content="Blue"/>
+        </StackPanel>
+
+        
+        <StackPanel Orientation="Horizontal" Margin="10" Grid.Row="2" Spacing="10">
+            <Label Content="Player 2:" Width="70"/>
+            <TextBox Width="100"/>
+            <RadioButton Content="Red"/>
+            <RadioButton Content="Blue"/>
+        </StackPanel>
+
+        
+        <StackPanel Grid.Row="3" HorizontalAlignment="Center" Margin="10">
+            <Button Content="Play" Width="80"/>
+        </StackPanel>
+
+</Grid>
 </Window>
