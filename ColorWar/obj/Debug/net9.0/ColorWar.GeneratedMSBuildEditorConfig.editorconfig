@@ -26,6 +26,9 @@ build_property.EnableCodeStyleSeverity =
 [C:/Users/adela/Desktop/Code/OMG_Otters/ColorWar/App.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
+[C:/Users/adela/Desktop/Code/OMG_Otters/ColorWar/Views/GridWindow.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
 [C:/Users/adela/Desktop/Code/OMG_Otters/ColorWar/Views/MainWindow.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
