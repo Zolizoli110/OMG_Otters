@@ -5,7 +5,9 @@
 *.nupkg
 *.DS_store
 .idea
-
+\bin
+\.idea
+\obj
 output/
 binlog/
 
