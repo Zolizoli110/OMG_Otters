@@ -4,10 +4,10 @@
 [Oo]bj/
 *.nupkg
 *.DS_store
-*\.idea
-*\bin
-*\.idea
-*\obj
+.idea
+\bin
+\.idea
+\obj
 output/
 binlog/
 
