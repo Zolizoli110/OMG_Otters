@@ -8,4 +8,22 @@ public partial class MainWindow : Window
     {
         InitializeComponent();
     }
+
+    void NewGameButtonClickHandler(object sender, Avalonia.Interactivity.RoutedEventArgs e)
+    {
+        var wnd = new NewGameWindow();
+
+        
+        wnd.Show();
+    }
+
+    void LoadGameButtonClickHandler(object sender, Avalonia.Interactivity.RoutedEventArgs e)
+    {
+        
+    }
+    void QuitGameButtonClickHandler(object sender, Avalonia.Interactivity.RoutedEventArgs e)
+    {
+        this.Close();
+        
+    }
 }

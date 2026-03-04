@@ -1,0 +1,51 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:ColorWar.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="250"
+        x:Class="ColorWar.Views.NewGameWindow"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="ColorWar" Width="400" Height="800" >
+
+
+    <Design.DataContext>
+        <!-- This only sets the DataContext for the previewer in an IDE,
+             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+
+    <Grid RowDefinitions="Auto,Auto,Auto,Auto">
+
+    
+        <StackPanel Orientation="Horizontal" Margin="10" Grid.Row="0" Spacing="5">
+            <Label Content="Gridsize:"/>
+            <TextBox Name="GridSizeXTextBox" Width="40"/>
+            <Label Content="x"/>
+            <TextBox Name="GridSizeYTextBox" Width="40"/>
+        </StackPanel>
+
+        
+        <StackPanel Orientation="Horizontal" Margin="10" Grid.Row="1" Spacing="10">
+            <Label Content="Player 1:" Width="70"/>
+            <TextBox Name="Player1NameTextBox" Width="100"/>
+            <RadioButton Name="RedButton1" Content="Red"/>
+            <RadioButton Name="BlueButton1" Content="Blue"/>
+        </StackPanel>
+
+        
+        <StackPanel Orientation="Horizontal" Margin="10" Grid.Row="2" Spacing="10">
+            <Label Content="Player 2:" Width="70"/>
+            <TextBox Name="Player2NameTextBox" Width="100"/>
+            <RadioButton Name="RedButton2" Content="Red"/>
+            <RadioButton Name="BlueButton2" Content="Blue"/>
+        </StackPanel>
+         
+        
+        <StackPanel Grid.Row="3" HorizontalAlignment="Center" Margin="10" Spacing="8">
+            <Button Content="Play" Width="80" Click="PlayButtonClickHandler"/>
+            <TextBox Name="PlayableMessageTextBox" Width="220" IsReadOnly="True" IsVisible="False" HorizontalAlignment="Center"/>
+        </StackPanel>
+
+</Grid>
+</Window>
