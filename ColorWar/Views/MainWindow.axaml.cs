@@ -12,8 +12,6 @@ public partial class MainWindow : Window
     void NewGameButtonClickHandler(object sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
         var wnd = new NewGameWindow();
-
-        
         wnd.Show();
     }
 
