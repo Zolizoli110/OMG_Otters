@@ -14,7 +14,7 @@ public static class CsvIO
         sw.WriteLine($"{board.Count} {board[0].Count}");
         foreach (List<int> line in board)
         {
-            sw.Write(string.Join(' ', line));
+            sw.Write(string.Join(' ', line) + ' ');
         }
         sw.Flush();
         sw.Close();
@@ -37,7 +37,7 @@ public static class CsvIO
         string[] dimensions = header?.Split(' ') ?? Array.Empty<string>();
         string[] values = data?.Split(' ') ?? Array.Empty<string>();
 
-        for (int i = 0; i < int.Parse(dimensions[0]); i += int.Parse(dimensions[1]))
+        for (int i = 0; i < int.Parse(dimensions[0]) * int.Parse(dimensions[1]); i += int.Parse(dimensions[1]))
         {
             List<int> row = new List<int>();
             for (int j = 0; j < int.Parse(dimensions[1]); j++)

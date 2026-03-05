@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
 using Avalonia.Media;
@@ -37,13 +38,13 @@ public class Board
 
     public Board(string fileName)
     {
-        string[][] board = CsvIO.ReadCsv(fileName);
-        Cells = new int[board.Length, board[0].Length];
-        for (int i = 0; i < board.Length; i++)
+        List<List<int>> board = CsvIO.ReadCsv(fileName);
+        Cells = new int[board.Count, board[0].Count];
+        for (int i = 0; i < board.Count; i++)
         {
-            for (int j = 0; j < board[0].Length; j++)
+            for (int j = 0; j < board[0].Count; j++)
             {
-                Cells[i, j] = int.Parse(board[i][j]);
+                Cells[i, j] = board[i][j];
             }
         } 
         FileName = fileName;
@@ -51,17 +52,23 @@ public class Board
 
     public void SaveToFile()
     {
-        string[][] board = new string[Cells.GetLength(0)][];
-        
+
+        List<List<int>> board = new List<List<int>>();
 
         for (int i = 0; i < Cells.GetLength(0); i++)
         {
-            board[i] = new string[Cells.GetLength(1)];
+            // Create row first
+            List<int> row = new List<int>();
+
             for (int j = 0; j < Cells.GetLength(1); j++)
             {
-                board[i][j] = Cells[i, j].ToString(); 
+                row.Add(Cells[i, j]);
             }
+
+            // Add row to board
+            board.Add(row);
         }
+
         CsvIO.WriteCsv(FileName ?? $"{Player1.Name}_vs_{Player2.Name}_{DateTime.Now:yyyy-MM-dd_HH-mm-ss}.csv", board);
     }
     

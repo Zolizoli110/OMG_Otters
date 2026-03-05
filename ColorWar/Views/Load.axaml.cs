@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Avalonia;
 using Avalonia.Controls;
@@ -52,7 +53,17 @@ public partial class Load : Window
         if (fileName != null)
         {
             var board = CsvIO.ReadCsv(fileName);
-            var gameWindow = new GameWindow(board.Length, board[0].Length, p1, Brushes.Red, p2, Brushes.Blue, board);
+            List<int> map = new List<int>();
+
+            for (int i = 0; i < board.Count; i++)
+            {
+                for (int j = 0; j < board[i].Count; j++)
+                {
+                    map.Add(board[i][j]);
+                }
+            }
+
+            var gameWindow = new GameWindow(board.Count, board[0].Count, p1, Brushes.Red, p2, Brushes.Blue, map);
             gameWindow.Show();
             this.Close();
         }

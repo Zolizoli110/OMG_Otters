@@ -79,7 +79,7 @@ public partial class NewGameWindow : Window
         var player1Colour = redButton1.IsChecked == true ? Brushes.Red : blueButton1.IsChecked == true ? Brushes.Blue : Brushes.Yellow;
         var player2Colour = redButton2.IsChecked == true ? Brushes.Red : blueButton2.IsChecked == true ? Brushes.Blue : Brushes.Yellow;
 
-        var gameWindow = new GameWindow(x, y, player1Name, player1Colour, player2Name, player2Colour);//int int string brushes string brushes
+        var gameWindow = new GameWindow(x, y, player1Name, player1Colour, player2Name, player2Colour,null);//int int string brushes string brushes
         gameWindow.Show();  
         Close();
     }

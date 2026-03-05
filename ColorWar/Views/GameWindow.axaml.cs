@@ -6,6 +6,7 @@ using Avalonia.Media;
 using ColorWar.Views;
 using System;
 using System.Collections.Generic;
+using ColorWar.Data;
 
 namespace ColorWar;
 
@@ -31,7 +32,20 @@ public partial class GameWindow : Window
     int x_size;
     int y_size;
     List<List<int>> table;
-    public GameWindow(int x_size, int y_size, string one_name, IBrush one_color, string two_name, IBrush two_color, List<int>? load)
+    public GameWindow(int x_size, int y_size, string one_name, IBrush one_color, string two_name, IBrush two_color)
+    {
+        this.x_size = x_size;
+        this.y_size = y_size;
+        one = new Player(one_name, one_color);
+        two = new Player(two_name, two_color);
+        turn = 0;
+        InitializeComponent();
+        BuildGameGrid(x_size, y_size);
+        LoadTable();
+        TurnIndicator.Text = $"Player 1 \"{one.Name}\" turn";
+        TurnIndicator.Foreground = one.Color;
+    }
+    public GameWindow(int x_size, int y_size, string one_name, IBrush one_color, string two_name, IBrush two_color, List<int> load)
     {
         this.x_size = x_size;
         this.y_size = y_size;
@@ -60,7 +74,7 @@ public partial class GameWindow : Window
             List<int> list = new List<int>(y_size + 2);
             for (int j = 0; j < y_size + 2; j++)
             {
-                if (j == 0 || j == y_size + 1)
+                if (i==0 || i==x_size+1 || j == 0 || j == y_size + 1)
                 {
                     list.Add(-1);
                 }
@@ -87,6 +101,7 @@ public partial class GameWindow : Window
                     button.Tag = 2;
                     button.Background = two.Color;
                 }
+                turn++;
                 counter++;
             }
         }
@@ -158,7 +173,8 @@ public partial class GameWindow : Window
                 button.IsEnabled = false;
             }
         }
-
+        string result = $"{player.Name};{player.Turn}";
+        //CsvIO.WriteLeaderboard(result);
     }
     private Button CreateCell()//instead of making each button in the xaml we can make this and call it
     {
@@ -274,5 +290,22 @@ public partial class GameWindow : Window
     private void SaveOnClick(object? sender, RoutedEventArgs e)//saves game on click
     {
 
+        List<List<int>> savemap = new List<List<int>>();
+
+        for (int i = 1; i <= x_size; i++)
+        {
+            List<int> row = new List<int>();
+
+            for (int j = 1; j <= y_size; j++)
+            {
+                row.Add(table[i][j]);   // copy interior cell
+            }
+
+            savemap.Add(row);
+        }
+
+        string filename = $"{one.Name}_vs_{two.Name}_{DateTime.Now:yyyy-MM-dd_HH-mm-ss}.csv";
+        CsvIO.WriteCsv(filename,savemap);
+        TurnIndicator.Text = "Board Saved. Quit now.";
     }
 }
