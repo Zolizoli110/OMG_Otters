@@ -13,11 +13,14 @@ public class Player
 {
     public string Name { get; }
     public IBrush Color { get; }
+    public int Turn { get; set; }
 
     public Player(string name, IBrush color)
     {
         Name = name; 
         Color = color;
+        Turn = 0;
+
     }
 }
 public partial class GameWindow : Window
@@ -221,6 +224,7 @@ public partial class GameWindow : Window
                 button.Background = one.Color;
                 button.Tag = 1;//set button tag
                 SaveMove(row, column,1);//save to matrix as well
+                one.Turn++;
                 TurnIndicator.Text = $"Player \"{two.Name}\" turn";
                 TurnIndicator.Foreground = two.Color;
             }
@@ -237,6 +241,7 @@ public partial class GameWindow : Window
                 button.Background = two.Color;
                 button.Tag = 2;//set button
                 SaveMove(row, column, 2);//save positon
+                two.Turn++;
                 TurnIndicator.Text = $"Player \"{one.Name}\" turn";
                 TurnIndicator.Foreground = one.Color;
             }
