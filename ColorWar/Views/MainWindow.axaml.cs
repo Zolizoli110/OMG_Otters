@@ -12,14 +12,14 @@ public partial class MainWindow : Window
     void NewGameButtonClickHandler(object sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
         var wnd = new NewGameWindow();
-
-        
         wnd.Show();
     }
 
     void LoadGameButtonClickHandler(object sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
-        
+        var loadWindow = new Load();
+        loadWindow.Show();
+        this.Close();
     }
     void QuitGameButtonClickHandler(object sender, Avalonia.Interactivity.RoutedEventArgs e)
     {

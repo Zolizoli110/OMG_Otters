@@ -1,6 +1,8 @@
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
+using Avalonia.Media;
 using System;
+using ColorWar.Data;
 
 namespace ColorWar.Views;
 public partial class NewGameWindow : Window
@@ -14,9 +16,14 @@ public partial class NewGameWindow : Window
     private readonly TextBox? _gridSizeYTextBox;
     private readonly TextBox? _player1NameTextBox;
     private readonly TextBox? _player2NameTextBox;
+    private readonly TextBlock? _leaderboardStringIndicator;
+    
 
     public NewGameWindow()
     {
+
+        string name = CsvIO.ReadLeaderboard();
+
         AvaloniaXamlLoader.Load(this);
         _redButton1 = this.FindControl<RadioButton>("RedButton1");
         _blueButton1 = this.FindControl<RadioButton>("BlueButton1");
@@ -27,7 +34,16 @@ public partial class NewGameWindow : Window
         _gridSizeYTextBox = this.FindControl<TextBox>("GridSizeYTextBox");
         _player1NameTextBox = this.FindControl<TextBox>("Player1NameTextBox");
         _player2NameTextBox = this.FindControl<TextBox>("Player2NameTextBox");
+        LeaderboardIndicator = this.FindControl<TextBlock>("LeaderboardIndicator");
+        _leaderboardStringIndicator = this.FindControl<TextBlock>("LeaderboardStringIndicator");
+
+
+        if (_leaderboardStringIndicator != null)
+        {
+            _leaderboardStringIndicator.Text = name;
+        }
     }
+
 
     private void PlayButtonClickHandler(object sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
@@ -75,11 +91,13 @@ public partial class NewGameWindow : Window
 
         var player1Name = string.IsNullOrWhiteSpace(player1NameTextBox.Text) ? "Player 1" : player1NameTextBox.Text.Trim();
         var player2Name = string.IsNullOrWhiteSpace(player2NameTextBox.Text) ? "Player 2" : player2NameTextBox.Text.Trim();
-        var player1Colour = redButton1.IsChecked == true ? "Red" : blueButton1.IsChecked == true ? "Blue" : "No colour";
-        var player2Colour = redButton2.IsChecked == true ? "Red" : blueButton2.IsChecked == true ? "Blue" : "No colour";
+        var player1Colour = redButton1.IsChecked == true ? Brushes.Red : blueButton1.IsChecked == true ? Brushes.Blue : Brushes.Yellow;
+        var player2Colour = redButton2.IsChecked == true ? Brushes.Red : blueButton2.IsChecked == true ? Brushes.Blue : Brushes.Yellow;
 
-        var gridWindow = new GridWindow(x, y, player1Name, player1Colour, player2Name, player2Colour);
-        gridWindow.Show();
+        var gameWindow = new GameWindow(x, y, player1Name, player1Colour, player2Name, player2Colour);
+        gameWindow.Show();  
         Close();
     }
+
+    
 }
