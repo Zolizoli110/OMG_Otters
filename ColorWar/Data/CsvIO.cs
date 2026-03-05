@@ -56,4 +56,59 @@ public static class CsvIO
         Directory.CreateDirectory(savesDir);
         return Path.Combine(savesDir, fileName);
     }
+
+    private static string GetLeaderboardFilePath()
+    {
+        string baseDir = AppContext.BaseDirectory;
+        return Path.Combine(baseDir, "leaderboard.csv");
+    }
+    public static void WriteLeaderboard(Tuple<string, int> result)
+    {
+        string filePath = GetLeaderboardFilePath();
+        List<Tuple<string, int>> leaderboard = new List<Tuple<string, int>>();
+        if (File.Exists(filePath))
+        {
+            using StreamReader sr = new StreamReader(filePath);
+            string header = sr.ReadLine();
+            string data;
+            while ((data = sr.ReadLine()) != null)
+            {
+                string[] parts = data.Split(' ');
+                leaderboard.Add(new Tuple<string, int>(parts[0], int.Parse(parts[1])));
+            }
+            sr.Close();
+        }
+        leaderboard.Add(result);
+        leaderboard.Sort((a, b) => a.Item2.CompareTo(b.Item2));
+        
+        using StreamWriter sw = new StreamWriter(filePath);
+        sw.WriteLine("Name Score");
+        foreach (Tuple<string, int> entry in leaderboard)
+        {
+            sw.WriteLine($"{entry.Item1} {entry.Item2}");
+        }
+        sw.Flush();
+        sw.Close();
+    }
+    
+    public static string ReadLeaderboard(string fileName)
+    {
+        string filePath = GetLeaderboardFilePath();
+        if (!File.Exists(filePath))
+        {
+            return "No leaderboard data available.";
+        }
+        
+        string leaderboardData = "";
+        using StreamReader sr = new StreamReader(filePath);
+        string header = sr.ReadLine();
+        string data;
+        while ((data = sr.ReadLine()) != null)
+        {
+            leaderboardData += data + Environment.NewLine;
+        }
+        sr.Close();
+        
+        return leaderboardData;
+    }
 }
