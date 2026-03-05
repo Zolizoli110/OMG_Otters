@@ -10,6 +10,17 @@ using ColorWar.Models;
 
 namespace ColorWar;
 
+public class Player
+{
+    public string Name { get; }
+    public IBrush Color { get; }
+
+    public Player(string name, IBrush color)
+    {
+        Name = name; 
+        Color = color;
+    }
+}
 public partial class GameWindow : Window
 {
     Player one;
@@ -18,31 +29,65 @@ public partial class GameWindow : Window
     int x_size;
     int y_size;
     List<List<int>> table;
-    public GameWindow(int x_size, int y_size, string one_name, IBrush one_color, string two_name, IBrush two_color)
-    {
-        this.x_size = x_size;
-        this.y_size = y_size;
-        one = new Player(one_name,one_color);
-        two = new Player(two_name,two_color);
-        turn = 0;
-        LoadTable();
-        InitializeComponent();
-        BuildGameGrid(x_size, y_size);
-        TurnIndicator.Text = $"Player 1 \"{one.Name}\" turn";
-        TurnIndicator.Foreground = one.PlayerColor;
-    }
-    public GameWindow(int x_size, int y_size, string one_name, IBrush one_color, string two_name, IBrush two_color, string[][] board)
+    public GameWindow(int x_size, int y_size, string one_name, IBrush one_color, string two_name, IBrush two_color, List<int>? load)
     {
         this.x_size = x_size;
         this.y_size = y_size;
         one = new Player(one_name, one_color);
         two = new Player(two_name, two_color);
         turn = 0;
-        LoadTable(board);
         InitializeComponent();
         BuildGameGrid(x_size, y_size);
+        if (load!=null)
+        {
+            LoadTable(load);
+        }
+        else
+        {
+            LoadTable();
+        }
         TurnIndicator.Text = $"Player 1 \"{one.Name}\" turn";
-        TurnIndicator.Foreground = one.PlayerColor;
+        TurnIndicator.Foreground = one.Color;
+    }
+    private void LoadTable(List<int>? load)//creates a X+2xY+2 matrix and fills it up with load array
+    {
+        table = new List<List<int>>(x_size + 2);
+        int counter = 0;
+        for (int i = 0; i < x_size + 2; i++)
+        {
+            List<int> list = new List<int>(y_size + 2);
+            for (int j = 0; j < y_size + 2; j++)
+            {
+                if (j == 0 || j == y_size + 1)
+                {
+                    list.Add(-1);
+                }
+                else
+                {
+                    list.Add(load[counter]);
+                    counter++;
+                }
+            }
+            table.Add(list);
+        }
+        counter = 0;
+        foreach(var child in GameMap.Children)
+        {
+            if(child is Button button)
+            {
+                if (load[counter]==1)
+                {
+                    button.Tag = 1;
+                    button.Background = one.Color;
+                }
+                else if (load[counter]==2)
+                {
+                    button.Tag = 2;
+                    button.Background = two.Color;
+                }
+                counter++;
+            }
+        }
     }
     private void LoadTable()//creates a X+2xY+2 matrix and fills it up with 0
     {
