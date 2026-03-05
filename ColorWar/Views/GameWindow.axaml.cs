@@ -173,8 +173,9 @@ public partial class GameWindow : Window
                 button.IsEnabled = false;
             }
         }
-        string result = $"{player.Name};{player.Turn}";
-        //CsvIO.WriteLeaderboard(result);
+        //string result = $"{player.Name};{player.Turn}";
+        Tuple<string, int> result = Tuple.Create(player.Name, player.Turn);
+        CsvIO.WriteLeaderboard(result);
     }
     private Button CreateCell()//instead of making each button in the xaml we can make this and call it
     {

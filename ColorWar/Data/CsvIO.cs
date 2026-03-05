@@ -82,7 +82,6 @@ public static class CsvIO
         leaderboard.Sort((a, b) => a.Item2.CompareTo(b.Item2));
         
         using StreamWriter sw = new StreamWriter(filePath);
-        sw.WriteLine("Name Score");
         foreach (Tuple<string, int> entry in leaderboard)
         {
             sw.WriteLine($"{entry.Item1} {entry.Item2}");
@@ -91,7 +90,7 @@ public static class CsvIO
         sw.Close();
     }
     
-    public static string ReadLeaderboard(string fileName)
+    public static string ReadLeaderboard()
     {
         string filePath = GetLeaderboardFilePath();
         if (!File.Exists(filePath))
@@ -101,7 +100,6 @@ public static class CsvIO
         
         string leaderboardData = "";
         using StreamReader sr = new StreamReader(filePath);
-        string header = sr.ReadLine();
         string data;
         while ((data = sr.ReadLine()) != null)
         {
