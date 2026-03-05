@@ -1,0 +1,39 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="ColorWar.Views.Load"
+        Title="Load"
+        MaxHeight="500"
+        MaxWidth="350"
+        Background="#1e3a76">
+        <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock Margin="0 5" Foreground="#CCD6EB" FontSize="18" FontWeight="Bold">Load Game</TextBlock>
+                <ScrollViewer 
+                    Name="SaveFiles" 
+                    Foreground="#E9ECF5"
+                    Background="#4c5b9a" 
+                    Width="300"
+                    Height="300"
+                    CornerRadius="10"
+                    VerticalScrollBarVisibility="Auto">
+                    
+                    <ListBox Background="Transparent"
+                             Name="SaveFilesListBox">
+                        
+                    </ListBox>
+                    
+                </ScrollViewer>
+                <Button Foreground="#E9ECF5" 
+                    Background="#4c5b9a" 
+                    Margin="0 20" 
+                    Width="60" 
+                    HorizontalContentAlignment="Center" 
+                    HorizontalAlignment="Center" 
+                    Click="BackToMenuButtonClickHandler"
+                    >Back</Button>
+            </StackPanel>
+        </Grid>
+</Window>

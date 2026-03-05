@@ -8,7 +8,7 @@ public static class CsvIO
     
     public static void WriteCsv(string fileName, string[][] board)
     {
-        string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, fileName);
+        string filePath = GetFilePath(fileName);
         using StreamWriter sw = new StreamWriter(filePath);
         sw.WriteLine($"{board.Length} {board[0].Length}");
         foreach (string[] line in board)
@@ -43,6 +43,9 @@ public static class CsvIO
     
     private static string GetFilePath(string fileName)
     {
-        return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, fileName);
+        string baseDir = AppContext.BaseDirectory;
+        string savesDir = Path.Combine(baseDir, "Saves");
+        Directory.CreateDirectory(savesDir);
+        return Path.Combine(savesDir, fileName);
     }
 }
