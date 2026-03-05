@@ -6,21 +6,10 @@ using Avalonia.Media;
 using ColorWar.Views;
 using System;
 using System.Collections.Generic;
+using ColorWar.Models;
 
 namespace ColorWar;
 
-public class Player
-{
-    public string Name { get; }
-    public IBrush Color { get; }
-
-    public Player(string name, IBrush color)
-    {
-        Name = name; 
-        Color = color;
-    }
-
-}
 public partial class GameWindow : Window
 {
     Player one;
@@ -40,7 +29,20 @@ public partial class GameWindow : Window
         InitializeComponent();
         BuildGameGrid(x_size, y_size);
         TurnIndicator.Text = $"Player 1 \"{one.Name}\" turn";
-        TurnIndicator.Foreground = one.Color;
+        TurnIndicator.Foreground = one.PlayerColor;
+    }
+    public GameWindow(int x_size, int y_size, string one_name, IBrush one_color, string two_name, IBrush two_color, string[][] board)
+    {
+        this.x_size = x_size;
+        this.y_size = y_size;
+        one = new Player(one_name, one_color);
+        two = new Player(two_name, two_color);
+        turn = 0;
+        LoadTable(board);
+        InitializeComponent();
+        BuildGameGrid(x_size, y_size);
+        TurnIndicator.Text = $"Player 1 \"{one.Name}\" turn";
+        TurnIndicator.Foreground = one.PlayerColor;
     }
     private void LoadTable()//creates a X+2xY+2 matrix and fills it up with 0
     {
@@ -57,6 +59,41 @@ public partial class GameWindow : Window
                 else
                 {
                     list.Add(0);
+                }
+            }
+            table.Add(list);
+        }
+    }
+    private void LoadTable(string[][] board)//creates a X+2xY+2 matrix and fills it up with 0
+    {
+        table = new List<List<int>>(x_size + 2);
+        for (int i = 0; i < x_size + 2; i++)
+        {
+            List<int> list = new List<int>(y_size + 2);
+            for (int j = 0; j < y_size + 2; j++)
+            {
+                if (j == 0 || j == y_size + 1 || i == 0 || i == x_size + 1)
+                {
+                    list.Add(-1);
+                }
+                else
+                {
+                    switch (board[i - 1][j-1])
+                    {
+                        case "0":
+                            list.Add(0);
+                            break;
+                        case "1":
+                            list.Add(1);
+                            turn++;
+                            break;
+                        case "2":
+                            list.Add(2);
+                            turn++;
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
             table.Add(list);
@@ -100,7 +137,7 @@ public partial class GameWindow : Window
 
     private void GameWon(Player player)
     {
-        TurnIndicator.Foreground = player.Color;
+        TurnIndicator.Foreground = player.PlayerColor;
         TurnIndicator.Text = $"Player {player.Name} won ";
         foreach(var child in GameMap.Children)
         {
@@ -172,11 +209,11 @@ public partial class GameWindow : Window
                         return;
                     }
                 }
-                button.Background = one.Color;
+                button.Background = one.PlayerColor;
                 button.Tag = 1;//set button tag
                 SaveMove(row, column,1);//save to matrix as well
                 TurnIndicator.Text = $"Player \"{two.Name}\" turn";
-                TurnIndicator.Foreground = two.Color;
+                TurnIndicator.Foreground = two.PlayerColor;
             }
             else
             {
@@ -188,11 +225,11 @@ public partial class GameWindow : Window
                         return;
                     }
                 }
-                button.Background = two.Color;
+                button.Background = two.PlayerColor;
                 button.Tag = 2;//set button
                 SaveMove(row, column, 2);//save positon
                 TurnIndicator.Text = $"Player \"{one.Name}\" turn";
-                TurnIndicator.Foreground = one.Color;
+                TurnIndicator.Foreground = one.PlayerColor;
             }
             turn++;
             if(turn == x_size*y_size)//if ran out of moves then its a draw
@@ -204,10 +241,14 @@ public partial class GameWindow : Window
             {
                 Player winner;
                 if (((turn + 1) % 2) + 1 == 1)
+                {
                     winner = one;
+                }
                 else
+                {
                     winner = two;
                     GameWon(winner);
+                }
             }
         }
     }
@@ -222,6 +263,14 @@ public partial class GameWindow : Window
     }
     private void SaveOnClick(object? sender, RoutedEventArgs e)//saves game on click
     {
-
+        Board board = new Board(x_size, y_size, one, two);
+        for (int i = 0; i < x_size; i++)
+        {
+            for (int j = 0; j < y_size; j++)
+            {
+                board.Cells[i, j] = table[i + 1][j + 1];
+            }
+        }
+        board.SaveToFile();
     }
 }

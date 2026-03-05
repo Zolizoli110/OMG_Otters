@@ -17,7 +17,9 @@ public partial class MainWindow : Window
 
     void LoadGameButtonClickHandler(object sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
-        
+        var loadWindow = new Load();
+        loadWindow.Show();
+        this.Close();
     }
     void QuitGameButtonClickHandler(object sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
