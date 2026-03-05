@@ -17,7 +17,7 @@ public class Player
 
     public Player(string name, IBrush color)
     {
-        Name = name; 
+        Name = name;
         Color = color;
         Turn = 0;
 
@@ -40,7 +40,7 @@ public partial class GameWindow : Window
         turn = 0;
         InitializeComponent();
         BuildGameGrid(x_size, y_size);
-        if (load!=null)
+        if (load != null)
         {
             LoadTable(load);
         }
@@ -73,16 +73,16 @@ public partial class GameWindow : Window
             table.Add(list);
         }
         counter = 0;
-        foreach(var child in GameMap.Children)
+        foreach (var child in GameMap.Children)
         {
-            if(child is Button button)
+            if (child is Button button)
             {
-                if (load[counter]==1)
+                if (load[counter] == 1)
                 {
                     button.Tag = 1;
                     button.Background = one.Color;
                 }
-                else if (load[counter]==2)
+                else if (load[counter] == 2)
                 {
                     button.Tag = 2;
                     button.Background = two.Color;
@@ -113,8 +113,8 @@ public partial class GameWindow : Window
     }
     private void SaveMove(int x, int y, int player)//saves moves from button click to table and converts them as table is larger than button grid
     {
-        int x1 = x + 1; 
-        int y1= y + 1;
+        int x1 = x + 1;
+        int y1 = y + 1;
         table[x1][y1] = player;
     }
 
@@ -122,11 +122,11 @@ public partial class GameWindow : Window
     {
         int x1 = x + 1;
         int y1 = y + 1;
-        for(int i=x1-1;i<x1+2;i++)
+        for (int i = x1 - 1; i < x1 + 2; i++)
         {
-            for(int j=y1-1;j<y1+2;j++)
+            for (int j = y1 - 1; j < y1 + 2; j++)
             {
-                if (table[i][j]==player)
+                if (table[i][j] == player)
                     return true;
             }
         }
@@ -134,13 +134,13 @@ public partial class GameWindow : Window
     }
     private bool CheckWin(int player)//checks if other player can make any moves 
     {
-        for(int i=1;i<x_size;i++)
+        for (int i = 1; i < x_size; i++)
         {
-            for (int j=1;j<y_size;j++)
+            for (int j = 1; j < y_size; j++)
             {
                 //if(table[i][j]==0 && CheckMove(i,j,player)) return false;
                 if (table[i][j] == 0)
-                    if (CheckMove(i-1, j-1, player))
+                    if (CheckMove(i - 1, j - 1, player))
                         return false;
             }
         }
@@ -151,9 +151,9 @@ public partial class GameWindow : Window
     {
         TurnIndicator.Foreground = player.Color;
         TurnIndicator.Text = $"Player {player.Name} won ";
-        foreach(var child in GameMap.Children)
+        foreach (var child in GameMap.Children)
         {
-            if(child is Button button && button.Tag is int tag && tag==0)
+            if (child is Button button && button.Tag is int tag && tag == 0)
             {
                 button.IsEnabled = false;
             }
@@ -202,9 +202,9 @@ public partial class GameWindow : Window
 
     private void SelectOnClick(object? sender, RoutedEventArgs e)//if someone clicked a button(out of the grid) we call this
     {
-        if(sender is Button button)
+        if (sender is Button button)
         {
-            if((int)button.Tag!=0)//if button was not clicked before
+            if ((int)button.Tag != 0)//if button was not clicked before
             {
                 return;
             }
@@ -212,10 +212,10 @@ public partial class GameWindow : Window
             int column = Grid.GetColumn(button);
             if (turn % 2 == 0)//check who's turn is it
             {
-                
+
                 if (turn != 0)//if not first turn must check adjacent blocks
                 {
-                    if(!CheckMove(row, column,1))
+                    if (!CheckMove(row, column, 1))
                     {
                         TurnIndicator.Text = $"Player \"{one.Name}\" turn - Invalid Move(Must place adjacent to an occupied cell.)";
                         return;
@@ -223,7 +223,7 @@ public partial class GameWindow : Window
                 }
                 button.Background = one.Color;
                 button.Tag = 1;//set button tag
-                SaveMove(row, column,1);//save to matrix as well
+                SaveMove(row, column, 1);//save to matrix as well
                 one.Turn++;
                 TurnIndicator.Text = $"Player \"{two.Name}\" turn";
                 TurnIndicator.Foreground = two.Color;
@@ -246,19 +246,19 @@ public partial class GameWindow : Window
                 TurnIndicator.Foreground = one.Color;
             }
             turn++;
-            if(turn == x_size*y_size)//if ran out of moves then its a draw
+            if (turn == x_size * y_size)//if ran out of moves then its a draw
             {
                 TurnIndicator.Foreground = Brushes.Black;
                 TurnIndicator.Text = "Draw";
             }
-            else if(turn>1 && CheckWin((turn%2)+1))//if not draw check if player can make moves
+            else if (turn > 1 && CheckWin((turn % 2) + 1))//if not draw check if player can make moves
             {
                 Player winner;
                 if (((turn + 1) % 2) + 1 == 1)
                     winner = one;
                 else
                     winner = two;
-                    GameWon(winner);
+                GameWon(winner);
             }
         }
     }
