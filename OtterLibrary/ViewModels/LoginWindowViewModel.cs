@@ -2,6 +2,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using OtterLibrary.Data;
 using OtterLibrary.Models;
+using OtterLibrary.Views;
 using System;
 using System.Security.Cryptography;
 using System.Text;
@@ -20,6 +21,7 @@ public partial class LoginWindowViewModel : ViewModelBase
     private string loginResult;
     
     public RelayCommand SignInCommand { get; }
+    public Action<User> LoginCallback { get; set; }
 
     public LoginWindowViewModel()
     {
@@ -35,8 +37,15 @@ public partial class LoginWindowViewModel : ViewModelBase
         byte[] saltBytes = Convert.FromBase64String(user.Salt);
         
         bool isValid = VerifyPassword(PasswordInput, hashBytes, saltBytes);
-        
-        LoginResult = isValid ? "Login SUCCESS" : "Wrong username or password";
+        if (isValid)
+        {
+            LoginResult ="Login SUCCESS";
+            LoginCallback?.Invoke(user);
+        }
+        else
+        {
+            LoginResult = "Wrong username or password";
+        }
     }
 
     private (byte[] hash, byte[] salt) HashPassword(string password)

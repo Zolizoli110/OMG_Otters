@@ -36,8 +36,8 @@ namespace OtterLibrary.ViewModels
                 Picture = "",
             };
 
-            Books = new ObservableCollection<Book>
-            {
+            Books = new ObservableCollection<Book>();
+            /*{
                 new Book()
                 {
                     Title = "1984",
@@ -134,7 +134,8 @@ namespace OtterLibrary.ViewModels
                     Description = "Against all odds, Katniss Everdeen has won the annual Hunger Games with fellow district tribute Peeta Mellark.",
                     Picture = "avares://OtterLibrary/Assets/Catching Fire.jpg"
                 }
-            };
+            };*/
+            Books = bookIO.ReadBook();
             foreach(Book book in Books)
             {
                 book.ImageFromBinding= ImageHelper.LoadFromResource(new Uri(book.Picture));
@@ -150,15 +151,21 @@ namespace OtterLibrary.ViewModels
             book.LeasedTo = user;
             book.Leased = true;
             OnPropertyChanged(nameof(book));
+            bookIO.WriteBook(Books);
         }
         private void EditBook(Book? book)
         {
             if (book == null) return;
+            if(book.IsEditing)
+            {
+                bookIO.WriteBook(Books);
+            }
             book.IsEditing = !book.IsEditing;
         }
         private void DeleteBook(Book? book)
         {
             Books.Remove(book);
+            bookIO.WriteBook(Books);
         }
         private void AddBook()
         {
