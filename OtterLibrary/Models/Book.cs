@@ -1,4 +1,7 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using Avalonia.Media.Imaging;
+using CommunityToolkit.Mvvm.ComponentModel;
+using OtterLibrary.Data;
+using System;
 
 namespace OtterLibrary.Models
 {
@@ -16,7 +19,9 @@ namespace OtterLibrary.Models
         [ObservableProperty]
         private bool _isEditing;
         public string EditButtonText => IsEditing ? "Save" : "Edit";
-        
+        public Bitmap? ImageFromBinding { get; set; }
+
+
         partial void OnIsEditingChanged(bool oldValue, bool newValue)
         {
             OnPropertyChanged(nameof(EditButtonText));
