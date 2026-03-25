@@ -7,6 +7,6 @@ namespace OtterLibrary.Models
     {
         public string? userName {  get; set; }
         public UserRole role { get; set; }
-        public List<Book>? LeasedBooks;
+        public List<Book> LeasedBooks = new List<Book>();
     }
 }

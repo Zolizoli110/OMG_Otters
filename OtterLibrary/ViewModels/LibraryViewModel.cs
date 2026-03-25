@@ -1,17 +1,19 @@
-﻿using System.Collections.ObjectModel;
-using System.Windows.Input;
-using CommunityToolkit.Mvvm.Input;
+﻿using CommunityToolkit.Mvvm.Input;
 using OtterLibrary.Models;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Windows.Input;
 
 namespace OtterLibrary.ViewModels
 {
-    public partial class LibraryViewModel : ViewModelBase
+    public partial class LibraryViewModel : ViewModelBase , INotifyPropertyChanged
     {
-        public User user { get; } = new User();
+        public User user { get; }
         public bool SeeMemberStuff => user.role == UserRole.Admin || user.role == UserRole.Member;
         public bool SeeLibrarianStuff => user.role == UserRole.Admin || user.role == UserRole.Librarian;
         public ObservableCollection<Book> Books { get; set; }
-        public string PageTitle { get; } = "Library Page ezt kell latni";
+        public Book newBook { get; set; }
         public ICommand Lease {  get; }
         public ICommand Edit { get; }
         public ICommand Delete { get; }
@@ -19,6 +21,16 @@ namespace OtterLibrary.ViewModels
         public LibraryViewModel(User? user)
         {
             this.user = user;
+
+            newBook = new Book()
+            {
+                Author = "",
+                Title = "",
+                ISBN = "",
+                Description = "",
+                Picture = "",
+            };
+
             Books = new ObservableCollection<Book>
             {
                 new Book()
@@ -27,7 +39,7 @@ namespace OtterLibrary.ViewModels
                     Author = "George Orwell",
                     ISBN = "978-1847498571",
                     Description = "Nineteen Eight-Four is George Orwell's terrifying vision of a totalitarian future in which everything and everyone is slave to a tyrannical regime.",
-                    Picture = "avares://OtterLibrary/Assets/1984.jpg"
+                    Picture = "avares://OtterLibrary/Assets/1984.jpg",
                 },
                 new Book()
                 {
@@ -122,24 +134,38 @@ namespace OtterLibrary.ViewModels
             Lease = new RelayCommand<Book>(LeaseBook);
             Edit = new RelayCommand<Book>(EditBook);
             Delete = new RelayCommand<Book>(DeleteBook);
-            Add = new RelayCommand<Book>(AddBook);
+            Add = new RelayCommand(AddBook);
         }
         private void LeaseBook(Book? book)
         {
             user.LeasedBooks.Add(book);
-            book.leasedTo = user;
+            book.LeasedTo = user;
+            book.Leased = true;
+            OnPropertyChanged(nameof(book));
         }
         private void EditBook(Book? book)
         {
-            
+            if (book == null) return;
+            book.IsEditing = !book.IsEditing;
         }
         private void DeleteBook(Book? book)
         {
             Books.Remove(book);
         }
-        private void AddBook(Book? book)
+        private void AddBook()
         {
-            Books.Add(book);
+
+            Books.Add(new Book()
+            {
+                Title = newBook.Title,
+                Author = newBook.Author,
+                ISBN = newBook.ISBN,
+                Description = newBook.Description,
+                Picture = newBook.Picture,
+            });
+            newBook = new Book();
+            OnPropertyChanged(nameof(newBook));
         }
+
     }
 }

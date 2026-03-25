@@ -8,6 +8,6 @@ namespace OtterLibrary.ViewModels
 {
     public partial class AllLeasesViewModel : ViewModelBase
     {
-        public string PageTitle { get; } = "ALl Leases Page ezt kell latni 3 library";
+        public string PageTitle { get; } = "All Currently Leased Books";
     }
 }
