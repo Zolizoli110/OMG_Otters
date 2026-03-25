@@ -1,0 +1,166 @@
+FUNCTIONAL TEST REPORT
+======================
+Tester: Zoltán Süveges
+
+
+============================================================
+1. MEMBER FUNCTIONALITY TESTS
+============================================================
+
+------------------------------------------------------------
+TEST 1: Borrowing Test
+------------------------------------------------------------
+Steps:
+1. Logged in as "member".
+2. Selected a book and clicked the "Borrow" button.
+3. Opened "My Leases" to verify the result.
+
+Expected Result:
+- The borrowed book should appear under "My Leases".
+- Book status should change to "Leased" in the catalog.
+
+Actual Result:
+- The book appeared under "My Leases".
+- Status in the catalog updated correctly to "Leased".
+
+Conclusion: PASSED
+
+
+------------------------------------------------------------
+TEST 2: Return Book Test
+------------------------------------------------------------
+Steps:
+1. Logged in as "member".
+2. Opened "My Leases".
+3. Selected a borrowed book and clicked "Return".
+4. Returned to the catalog to check the status.
+
+Expected Result:
+- Book should disappear from "My Leases".
+- Catalog should show the book as "Available".
+
+Actual Result:
+- Book was removed from "My Leases".
+- Catalog displayed status "Available".
+
+Conclusion: ✅ PASSED
+
+
+============================================================
+2. LIBRARIAN FUNCTIONALITY TESTS
+============================================================
+
+------------------------------------------------------------
+TEST 3: Add Book Test
+------------------------------------------------------------
+Steps:
+1. Logged in as "librarian".
+2. Entered:
+   - Title: "New Test Book"
+   - Author: "Test Author"
+   - ISBN: "123456"
+3. Saved the book.
+4. Logged in as "member" to confirm visibility.
+
+Expected Result:
+- Book appears in the librarian's Full Catalog.
+- Book appears in the member’s Library Catalog.
+
+Actual Result:
+- Book is visible in both catalogs.
+
+Conclusion: PASSED
+
+
+------------------------------------------------------------
+TEST 4: Delete Book Test
+------------------------------------------------------------
+Steps:
+1. Logged in as "librarian".
+2. Selected the previously added test book.
+3. Clicked "Delete" and confirmed the action.
+4. Checked both librarian and member catalogs.
+
+Expected Result:
+- Book should no longer appear in any catalog.
+
+Actual Result:
+- Book was successfully removed from both catalogs.
+
+Conclusion: PASSED
+
+
+------------------------------------------------------------
+TEST 5: Active Loan Tracking
+------------------------------------------------------------
+Steps:
+1. Logged in as "member".
+2. Borrowed a book.
+3. Logged out and logged in as "librarian".
+4. Opened the "Active Leases" page.
+
+Expected Result:
+- The Active Loans list should show:
+  - The borrowed book.
+  - The name of the member who borrowed it.
+
+Actual Result:
+- Book appeared correctly under Active Leases.
+- Borrower name displayed.
+
+Conclusion: ✅ PASSED
+
+
+============================================================
+3. SYSTEM-LEVEL TESTS
+============================================================
+
+------------------------------------------------------------
+TEST 6: Login Test
+------------------------------------------------------------
+Steps:
+1. Logged in using:
+   - Member credentials.
+   - Librarian credentials.
+   - Admin credentials.
+2. Observed which interface appears.
+
+Expected Result:
+- Members go to Member Interface.
+- Librarians go to Librarian Interface.
+- Admin see both
+
+Actual Result:
+- All roles were redirected correctly and shown the correct UI.
+
+Conclusion: PASSED
+
+
+------------------------------------------------------------
+TEST 8: Data Persistence Test
+------------------------------------------------------------
+Steps:
+1. As librarian, added a new book.
+2. As member, borrowed a book.
+3. Closed and restarted the application.
+4. Checked the catalog and My Loans.
+
+Expected Result:
+- All changes should still exist after restart (from JSON file).
+
+Actual Result:
+- Books, loan status, and updates were persisted.
+
+Conclusion: PASSED
+
+
+============================================================
+OVERALL SUMMARY
+============================================================
+All functional and system-level tests passed successfully.
+The application meets the required criteria for member and librarian functionality.
+All JSON persistence operations work correctly, and the UI logic performs as intended.
+
+FINAL RESULT:
+ ALL TESTS PASSED
+
