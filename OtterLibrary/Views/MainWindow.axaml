@@ -27,10 +27,10 @@
 		<TabItem Header="Library">
             <ContentControl Content="{Binding Library}"/>
         </TabItem>
-        <TabItem Header="My Leases">
+        <TabItem Header="My Leases" IsVisible="{Binding SeeMemberStuff}">
             <ContentControl Content="{Binding MyLeases}"/>
         </TabItem>
-        <TabItem Header="All Leases">
+        <TabItem Header="All Leases" IsVisible="{Binding SeeLibrarianStuff}">
             <ContentControl Content="{Binding AllLeases}"/>
         </TabItem>
     </TabControl>

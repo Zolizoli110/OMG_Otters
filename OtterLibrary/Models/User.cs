@@ -2,11 +2,11 @@
 
 namespace OtterLibrary.Models
 {
-    public enum UserRole { Member,Librarian}
+    public enum UserRole { Member,Librarian,Admin}
     public class User
     {
-        string userName {  get; set; }
-        UserRole role { get; set; }
-        List<Book> LeasedBooks;
+        public string? userName {  get; set; }
+        public UserRole role { get; set; }
+        public List<Book>? LeasedBooks;
     }
 }

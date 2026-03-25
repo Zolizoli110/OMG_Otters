@@ -3,6 +3,7 @@ using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using OtterLibrary.Views;
+using OtterLibrary.Models;
 using System;
 using System.Security.Cryptography;
 
@@ -23,6 +24,13 @@ public partial class Login : Window
 
     public void SignInButton_Click(object sender, RoutedEventArgs e)
     {
+        User user = new User();
+        user.userName = _username;
+        user.role = UserRole.Admin;
+        var win = new MainWindow(user);
+        win.Show();
+        this.Close();
+        /////////////////////////////
         Console.WriteLine("Attempting login...");
         var inputUsername = UsernameTextBox.Text;
         var inputPassword = PasswordTextBox.Text;
@@ -38,9 +46,14 @@ public partial class Login : Window
         if (isValid)
         {
             Console.WriteLine("Login SUCCESS");
-            var win = new MainWindow();
+            /*User user = new User();
+            user.userName = _username;
+            //user.role = UserRole.Member;
+            //user.role = UserRole.Librarian;
+            user.role = UserRole.Admin;
+            var win = new MainWindow(user);
             win.Show();
-            this.Close();
+            this.Close();*/
         }
         else
             Console.WriteLine("Wrong password");
