@@ -32,15 +32,22 @@ public partial class LoginWindowViewModel : ViewModelBase
     {
         UserIO userIO = new UserIO("users.json");
         User user = userIO.CheckUser(UsernameInput);
-        
-        byte[] hashBytes = Convert.FromBase64String(user.Hash);
-        byte[] saltBytes = Convert.FromBase64String(user.Salt);
-        
-        bool isValid = VerifyPassword(PasswordInput, hashBytes, saltBytes);
-        if (isValid)
+
+        if (user != null)
         {
-            LoginResult ="Login SUCCESS";
-            LoginCallback?.Invoke(user);
+            byte[] hashBytes = Convert.FromBase64String(user.Hash);
+            byte[] saltBytes = Convert.FromBase64String(user.Salt);
+
+            bool isValid = VerifyPassword(PasswordInput, hashBytes, saltBytes);
+            if (isValid)
+            {
+                LoginResult = "Login SUCCESS";
+                LoginCallback?.Invoke(user);
+            }
+            else
+            {
+                LoginResult = "Wrong username or password";
+            }
         }
         else
         {

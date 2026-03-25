@@ -1,9 +1,11 @@
 using OtterLibrary.Models;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using static System.Reflection.Metadata.BlobBuilder;
 
 namespace OtterLibrary.Data;
 
@@ -46,10 +48,6 @@ public class BookIO
     }
     public void Save(ObservableCollection<Book> books)
     {
-        foreach (Book book in books)
-        {
-            book.ImageFromBinding = null;
-        }
         StreamWriter sw = new StreamWriter(filePath);
         string json = JsonSerializer.Serialize(books);
         sw.Write(json);

@@ -26,7 +26,7 @@
                         <TextBlock FontWeight="Bold" Text="ISBN" Width="400" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="3"/>
                         <TextBlock FontWeight="Bold" Text="Return Book" Width="200" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="4"/>
                     </Grid>
-	    <ItemsControl ItemsSource="{Binding MyLeasedBooks}">
+	    <ItemsControl ItemsSource="{Binding user.LeasedBooks}">
 	    	<ItemsControl.ItemTemplate>
 	    		<DataTemplate>
 	    			<Grid Margin="5" ShowGridLines="True">

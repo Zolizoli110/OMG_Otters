@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using OtterLibrary.Data;
 using System;
+using System.Text.Json.Serialization;
 
 namespace OtterLibrary.Models
 {
@@ -19,6 +20,7 @@ namespace OtterLibrary.Models
         [ObservableProperty]
         private bool _isEditing;
         public string EditButtonText => IsEditing ? "Save" : "Edit";
+        [JsonIgnore]
         public Bitmap? ImageFromBinding { get; set; }
 
 

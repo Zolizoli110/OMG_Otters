@@ -14,6 +14,7 @@ namespace OtterLibrary.ViewModels
     public partial class LibraryViewModel : ViewModelBase , INotifyPropertyChanged
     {
         public BookIO bookIO {  get; set; }
+        public UserIO userIO { get; set; }
         public User user { get; }
         public bool SeeMemberStuff => user.Role == UserRole.Admin || user.Role == UserRole.Member;
         public bool SeeLibrarianStuff => user.Role == UserRole.Admin || user.Role == UserRole.Librarian;
@@ -27,6 +28,7 @@ namespace OtterLibrary.ViewModels
         {
             this.user = user;
             bookIO = new BookIO("catalog.json");
+            userIO = new UserIO("user_catalog.json");
             newBook = new Book()
             {
                 Author = "",
@@ -138,7 +140,14 @@ namespace OtterLibrary.ViewModels
             Books = bookIO.ReadBook();
             foreach(Book book in Books)
             {
-                book.ImageFromBinding= ImageHelper.LoadFromResource(new Uri(book.Picture));
+                if(book.Picture!="")
+                {
+                    book.ImageFromBinding = ImageHelper.LoadFromResource(new Uri(book.Picture));
+                }
+                if(book.LeasedTo == user.UserName)
+                {
+                    user.LeasedBooks.Add(book);
+                }
             }
             Lease = new RelayCommand<Book>(LeaseBook);
             Edit = new RelayCommand<Book>(EditBook);
@@ -147,20 +156,26 @@ namespace OtterLibrary.ViewModels
         }
         private void LeaseBook(Book? book)
         {
+            book.ImageFromBinding = ImageHelper.LoadFromResource(new Uri(book.Picture));
             user.LeasedBooks.Add(book);
             book.LeasedTo = user.UserName;
             book.Leased = true;
             OnPropertyChanged(nameof(book));
             bookIO.Save(Books);
+            //userIO.Borrow(user.UserName,Books);
         }
         private void EditBook(Book? book)
         {
             if (book == null) return;
             if(book.IsEditing)
             {
+                book.IsEditing = false;
                 bookIO.Save(Books);
             }
-            book.IsEditing = !book.IsEditing;
+            else
+            {
+                book.IsEditing = true;
+            }
         }
         private void DeleteBook(Book? book)
         {
@@ -169,19 +184,26 @@ namespace OtterLibrary.ViewModels
         }
         private void AddBook()
         {
-            newBook = new Book()
+            if(newBook==null) return;
+            Book BookToAdd = new Book()
             {
                 Title = newBook.Title,
                 Author = newBook.Author,
                 ISBN = newBook.ISBN,
                 Description = newBook.Description,
                 Picture = newBook.Picture,
+                Leased = false,
+                LeasedTo = ""
             };
-            string newPicture = "avares://OtterLibrary/Assets/";
-            newPicture+=newBook.Picture;
-            newBook.Picture = newPicture;
-            newBook.ImageFromBinding = ImageHelper.LoadFromResource(new Uri(newBook.Picture));
-            Books.Add(newBook);
+            if (BookToAdd.Picture != "" && BookToAdd.Picture!=null)
+            {
+                string newPicture = "avares://OtterLibrary/Assets/";
+                newPicture += newBook.Picture;
+                BookToAdd.Picture = newPicture;
+                BookToAdd.ImageFromBinding = ImageHelper.LoadFromResource(new Uri(BookToAdd.Picture));
+            }
+            Books.Add(BookToAdd);
+            newBook = new Book();
             OnPropertyChanged(nameof(newBook));
             bookIO.Save(Books);
         }

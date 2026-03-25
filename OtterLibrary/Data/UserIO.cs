@@ -45,7 +45,7 @@ public class UserIO
         sw.Flush();
         sw.Close();
     }
-    public void Return(string username, ObservableCollection<Book> borrowedBooks)
+    public void Return(string username, Book Book)
     {
         StreamReader sr = new StreamReader(filePath);
         string json = sr.ReadToEnd();
@@ -54,15 +54,13 @@ public class UserIO
         
         User? user = users.FirstOrDefault(u => u.UserName == username);
 
-        foreach (Book b in borrowedBooks)
-        {
-            user?.LeasedBooks.Remove(b);
-        }
+            user?.LeasedBooks.Remove(Book);
         
         StreamWriter sw = new StreamWriter(filePath);
         string jsonString = JsonSerializer.Serialize(users);
         sw.Write(jsonString);
         sw.Flush();
         sw.Close();
+
     }
 }
