@@ -35,7 +35,6 @@
                                        Source="avares://OtterLibrary/Assets/1984.jpg"/>
                                     <TextBlock Text="Unavailable" VerticalAlignment="Center" HorizontalAlignment="Center" Opacity="{Binding Leased}" FontSize="20" FontWeight="Bold" Foreground="Red"/>
                                 </Grid>
-                                
                                 <Separator Margin="-10,5,-10,5"/>
 	        				    <TextBox Text="{Binding Title}" TextWrapping="Wrap" ClipToBounds="True" Height="55" FontSize="18" FontWeight="Black" TextAlignment="Center" IsEnabled="{Binding IsEditing}"/>
                                 <TextBlock TextAlignment="Center" FontStyle="Italic" TextWrapping="Wrap" ClipToBounds="True" FontSize="12" Text="Written by" />

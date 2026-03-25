@@ -10,9 +10,9 @@ public partial class MainWindowViewModel : ViewModelBase
     public User user { get; }
     public bool SeeMemberStuff => user.role == UserRole.Admin || user.role == UserRole.Member;
     public bool SeeLibrarianStuff => user.role == UserRole.Admin || user.role == UserRole.Librarian;
-    public LibraryViewModel Library { get; } = new LibraryViewModel(null);
-    public MyLeasesViewModel MyLeases { get; } = new MyLeasesViewModel(null);
-    public AllLeasesViewModel AllLeases { get; } = new AllLeasesViewModel(null);
+    public LibraryViewModel Library { get; }
+    public MyLeasesViewModel MyLeases { get; }
+    public AllLeasesViewModel AllLeases { get; }
 
     public MainWindowViewModel(User? user)
     {
