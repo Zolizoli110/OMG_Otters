@@ -21,7 +21,8 @@ public class UserIO
         string json = sr.ReadToEnd();
         sr.Close();
         List<User> users = JsonSerializer.Deserialize<List<User>>(json) ?? new List<User>();
-        return users.FirstOrDefault(u => u.UserName == username);
+        User user = users.FirstOrDefault(u => u.UserName == username);
+        return user;
     }
 
     public void Borrow(string username, ObservableCollection<Book> borrowedBooks)

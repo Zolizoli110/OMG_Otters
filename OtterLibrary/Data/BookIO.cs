@@ -15,12 +15,12 @@ public class BookIO
         this.filePath = filePath;
     }
 
-    public List<Book>? ReadBook()
+    public ObservableCollection<Book>? ReadBook()
     {
         if (!File.Exists(filePath))
         {
             File.Create(filePath).Close();
-            return new List<Book>();
+            return new ObservableCollection<Book>();
         }
         
         string json = File.ReadAllText(filePath); 
@@ -28,28 +28,43 @@ public class BookIO
         if (string.IsNullOrWhiteSpace(json))
         {
             File.WriteAllText(filePath, "[]");
-            return new List<Book>();
+            return new ObservableCollection<Book>();
         }
 
         try
         {
-            return JsonSerializer.Deserialize<List<Book>>(json)
-                   ?? new List<Book>();
+            return JsonSerializer.Deserialize<ObservableCollection<Book>>(json)
+                   ?? new ObservableCollection<Book>();
         }
         catch
         {
             // Recover from corrupted JSON
             File.WriteAllText(filePath, "[]");
-            return new List<Book>();
+            return new ObservableCollection<Book>();
         }
     }
 
     public void WriteBook(ObservableCollection<Book> books)
     {
-        List<Book> bookList = ReadBook();
+        ObservableCollection<Book> bookList = ReadBook();
+        foreach (Book book in books)
+        {
+            bookList?.Add(book);
+        }
+        Save(bookList);
+    }
+    
+    public void WriteBook(Book book)
+    {
+        ObservableCollection<Book> bookList = ReadBook();
+        bookList.Add(book);
+        Save(bookList);
+    }
+
+    private void Save(ObservableCollection<Book> books)
+    {
         StreamWriter sw = new StreamWriter(filePath);
-        bookList.AddRange(books);
-        string json = JsonSerializer.Serialize(bookList);
+        string json = JsonSerializer.Serialize(books);
         sw.Write(json);
         sw.Flush();
         sw.Close();
