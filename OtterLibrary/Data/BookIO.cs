@@ -47,9 +47,21 @@ public class BookIO
     public void WriteBook(ObservableCollection<Book> books)
     {
         List<Book> bookList = ReadBook();
-        StreamWriter sw = new StreamWriter(filePath);
         bookList.AddRange(books);
-        string json = JsonSerializer.Serialize(bookList);
+        Save(bookList);
+    }
+    
+    public void WriteBook(Book book)
+    {
+        List<Book> bookList = ReadBook();
+        bookList.Add(book);
+        Save(bookList);
+    }
+
+    private void Save(List<Book> books)
+    {
+        StreamWriter sw = new StreamWriter(filePath);
+        string json = JsonSerializer.Serialize(books);
         sw.Write(json);
         sw.Flush();
         sw.Close();
