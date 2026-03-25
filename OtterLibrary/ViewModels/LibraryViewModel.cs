@@ -1,9 +1,13 @@
-﻿using CommunityToolkit.Mvvm.Input;
+﻿using Avalonia.Media.Imaging;
+using CommunityToolkit.Mvvm.Input;
+using OtterLibrary.Data;
 using OtterLibrary.Models;
+using SkiaSharp;
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Input;
-using OtterLibrary.Data;
 
 namespace OtterLibrary.ViewModels
 {
@@ -40,7 +44,7 @@ namespace OtterLibrary.ViewModels
                     Author = "George Orwell",
                     ISBN = "978-1847498571",
                     Description = "Nineteen Eight-Four is George Orwell's terrifying vision of a totalitarian future in which everything and everyone is slave to a tyrannical regime.",
-                    Picture = "avares://OtterLibrary/Assets/1984.jpg",
+                    Picture = "avares://OtterLibrary/Assets/1984.jpg"
                 },
                 new Book()
                 {
@@ -129,10 +133,12 @@ namespace OtterLibrary.ViewModels
                     ISBN = "978-1546159544",
                     Description = "Against all odds, Katniss Everdeen has won the annual Hunger Games with fellow district tribute Peeta Mellark.",
                     Picture = "avares://OtterLibrary/Assets/Catching Fire.jpg"
-                },
-
+                }
             };
-            Books = bookIO.ReadBook();
+            foreach(Book book in Books)
+            {
+                book.ImageFromBinding= ImageHelper.LoadFromResource(new Uri(book.Picture));
+            }
             Lease = new RelayCommand<Book>(LeaseBook);
             Edit = new RelayCommand<Book>(EditBook);
             Delete = new RelayCommand<Book>(DeleteBook);
@@ -156,16 +162,19 @@ namespace OtterLibrary.ViewModels
         }
         private void AddBook()
         {
-
-            Books.Add(new Book()
+            newBook = new Book()
             {
                 Title = newBook.Title,
                 Author = newBook.Author,
                 ISBN = newBook.ISBN,
                 Description = newBook.Description,
                 Picture = newBook.Picture,
-            });
-            newBook = new Book();
+            };
+            string newPicture = "avares://OtterLibrary/Assets/";
+            newPicture+=newBook.Picture;
+            newBook.Picture = newPicture;
+            newBook.ImageFromBinding = ImageHelper.LoadFromResource(new Uri(newBook.Picture));
+            Books.Add(newBook);
             OnPropertyChanged(nameof(newBook));
             bookIO.WriteBook(newBook);
         }
