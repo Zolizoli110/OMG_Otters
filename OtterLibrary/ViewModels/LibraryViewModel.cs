@@ -3,14 +3,15 @@ using OtterLibrary.Models;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Input;
+using OtterLibrary.Data;
 
 namespace OtterLibrary.ViewModels
 {
     public partial class LibraryViewModel : ViewModelBase , INotifyPropertyChanged
     {
         public User user { get; }
-        public bool SeeMemberStuff => user.role == UserRole.Admin || user.role == UserRole.Member;
-        public bool SeeLibrarianStuff => user.role == UserRole.Admin || user.role == UserRole.Librarian;
+        public bool SeeMemberStuff => user.Role == UserRole.Admin || user.Role == UserRole.Member;
+        public bool SeeLibrarianStuff => user.Role == UserRole.Admin || user.Role == UserRole.Librarian;
         public ObservableCollection<Book> Books { get; set; }
         public Book newBook { get; set; }
         public ICommand Lease {  get; }
@@ -164,6 +165,8 @@ namespace OtterLibrary.ViewModels
             });
             newBook = new Book();
             OnPropertyChanged(nameof(newBook));
+            BookIO bookIO = new BookIO("catalog.json");
+            bookIO.WriteBook(Books);
         }
 
     }

@@ -1,7 +1,8 @@
+using OtterLibrary.Models;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Text.Json;
-using OtterLibrary.Models;
 
 namespace OtterLibrary.Data;
 
@@ -43,7 +44,7 @@ public class BookIO
         }
     }
 
-    public void WriteBook(List<Book> books)
+    public void WriteBook(ObservableCollection<Book> books)
     {
         List<Book> bookList = ReadBook();
         StreamWriter sw = new StreamWriter(filePath);

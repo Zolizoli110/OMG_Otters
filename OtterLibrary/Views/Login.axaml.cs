@@ -25,8 +25,8 @@ public partial class Login : Window
     public void SignInButton_Click(object sender, RoutedEventArgs e)
     {
         User user = new User();
-        user.userName = _username;
-        user.role = UserRole.Admin;
+        user.UserName = _username;
+        user.Role = UserRole.Admin;
         var win = new MainWindow(user);
         win.Show();
         this.Close();

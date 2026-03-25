@@ -41,7 +41,7 @@
                             <TextBlock Margin="70,0,0,0" Text="{Binding Title}" Width="330" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1"/>
                             <TextBlock Margin="70,0,0,0" Text="{Binding Author}" Width="330" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="2"/>
                             <TextBlock Margin="70,0,0,0" Text="{Binding ISBN}" Width="330" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="3"/>
-                            <TextBlock Margin="70,0,0,0" Text="{Binding LeasedTo.userName}" Width="330" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="4"/>
+                            <TextBlock Margin="70,0,0,0" Text="{Binding LeasedTo.UserName}" Width="330" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="4"/>
                         </Grid>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>

@@ -8,8 +8,8 @@ namespace OtterLibrary.ViewModels;
 public partial class MainWindowViewModel : ViewModelBase
 {
     public User user { get; }
-    public bool SeeMemberStuff => user.role == UserRole.Admin || user.role == UserRole.Member;
-    public bool SeeLibrarianStuff => user.role == UserRole.Admin || user.role == UserRole.Librarian;
+    public bool SeeMemberStuff => user.Role == UserRole.Admin || user.Role == UserRole.Member;
+    public bool SeeLibrarianStuff => user.Role == UserRole.Admin || user.Role == UserRole.Librarian;
     public LibraryViewModel Library { get; }
     public MyLeasesViewModel MyLeases { get; }
     public AllLeasesViewModel AllLeases { get; }
@@ -20,8 +20,8 @@ public partial class MainWindowViewModel : ViewModelBase
         {
             user = new User()
             {
-                userName = "test",
-                role = UserRole.Admin
+                UserName = "test",
+                Role = UserRole.Admin
             };
             
         }
@@ -34,8 +34,8 @@ public partial class MainWindowViewModel : ViewModelBase
     {
         User user = new User()
         {
-            userName = "test",
-            role = UserRole.Admin
+            UserName = "test",
+            Role = UserRole.Admin
         };
         this.user = user;
     }

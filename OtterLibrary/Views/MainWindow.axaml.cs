@@ -18,8 +18,8 @@ public partial class MainWindow : Window
         {
             user = new User()
             {
-                userName = "test",
-                role = UserRole.Admin
+                UserName = "test",
+                Role = UserRole.Admin
             };
         }
         InitializeComponent();
