@@ -24,7 +24,7 @@ public class UserIO
         return users.FirstOrDefault(u => u.UserName == username);
     }
 
-    public void Write(string username, ObservableCollection<Book> borrowedBooks)
+    public void Borrow(string username, ObservableCollection<Book> borrowedBooks)
     {
         StreamReader sr = new StreamReader(filePath);
         string json = sr.ReadToEnd();
@@ -36,6 +36,26 @@ public class UserIO
         foreach (Book b in borrowedBooks)
         {
             user?.LeasedBooks.Add(b);
+        }
+        
+        StreamWriter sw = new StreamWriter(filePath);
+        string jsonString = JsonSerializer.Serialize(users);
+        sw.Write(jsonString);
+        sw.Flush();
+        sw.Close();
+    }
+    public void Return(string username, ObservableCollection<Book> borrowedBooks)
+    {
+        StreamReader sr = new StreamReader(filePath);
+        string json = sr.ReadToEnd();
+        sr.Close();
+        List<User> users = JsonSerializer.Deserialize<List<User>>(json) ?? new List<User>();
+        
+        User? user = users.FirstOrDefault(u => u.UserName == username);
+
+        foreach (Book b in borrowedBooks)
+        {
+            user?.LeasedBooks.Remove(b);
         }
         
         StreamWriter sw = new StreamWriter(filePath);
