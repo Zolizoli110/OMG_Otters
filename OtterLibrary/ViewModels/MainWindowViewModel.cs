@@ -23,11 +23,10 @@ public partial class MainWindowViewModel : ViewModelBase
                 UserName = "test",
                 Role = UserRole.Admin
             };
-            
         }
         this.user = user;
         Library = new LibraryViewModel(user);
-        MyLeases = new MyLeasesViewModel(user);
+        MyLeases = new MyLeasesViewModel(user,Library.Books);
         AllLeases = new AllLeasesViewModel(Library.Books);
     }
     public MainWindowViewModel()

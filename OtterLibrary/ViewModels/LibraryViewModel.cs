@@ -148,24 +148,24 @@ namespace OtterLibrary.ViewModels
         private void LeaseBook(Book? book)
         {
             user.LeasedBooks.Add(book);
-            book.LeasedTo = user;
+            book.LeasedTo = user.UserName;
             book.Leased = true;
             OnPropertyChanged(nameof(book));
-            bookIO.WriteBook(Books);
+            bookIO.Save(Books);
         }
         private void EditBook(Book? book)
         {
             if (book == null) return;
             if(book.IsEditing)
             {
-                bookIO.WriteBook(Books);
+                bookIO.Save(Books);
             }
             book.IsEditing = !book.IsEditing;
         }
         private void DeleteBook(Book? book)
         {
             Books.Remove(book);
-            bookIO.WriteBook(Books);
+            bookIO.Save(Books);
         }
         private void AddBook()
         {
@@ -183,7 +183,7 @@ namespace OtterLibrary.ViewModels
             newBook.ImageFromBinding = ImageHelper.LoadFromResource(new Uri(newBook.Picture));
             Books.Add(newBook);
             OnPropertyChanged(nameof(newBook));
-            bookIO.WriteBook(newBook);
+            bookIO.Save(Books);
         }
 
     }

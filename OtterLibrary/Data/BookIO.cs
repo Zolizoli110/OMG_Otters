@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace OtterLibrary.Data;
 
@@ -43,26 +44,12 @@ public class BookIO
             return new ObservableCollection<Book>();
         }
     }
-
-    public void WriteBook(ObservableCollection<Book> books)
+    public void Save(ObservableCollection<Book> books)
     {
-        ObservableCollection<Book> bookList = ReadBook();
         foreach (Book book in books)
         {
-            bookList?.Add(book);
+            book.ImageFromBinding = null;
         }
-        Save(bookList);
-    }
-    
-    public void WriteBook(Book book)
-    {
-        ObservableCollection<Book> bookList = ReadBook();
-        bookList.Add(book);
-        Save(bookList);
-    }
-
-    private void Save(ObservableCollection<Book> books)
-    {
         StreamWriter sw = new StreamWriter(filePath);
         string json = JsonSerializer.Serialize(books);
         sw.Write(json);

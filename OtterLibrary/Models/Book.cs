@@ -15,7 +15,7 @@ namespace OtterLibrary.Models
         [ObservableProperty]
         private bool _leased;
         [ObservableProperty]
-        private User? _leasedTo;
+        private string _leasedTo;
         [ObservableProperty]
         private bool _isEditing;
         public string EditButtonText => IsEditing ? "Save" : "Edit";
