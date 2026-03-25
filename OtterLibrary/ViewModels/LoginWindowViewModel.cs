@@ -1,5 +1,8 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using OtterLibrary.Data;
+using OtterLibrary.Models;
+using System;
 using System.Security.Cryptography;
 
 namespace OtterLibrary.ViewModels;
@@ -16,17 +19,15 @@ public partial class LoginWindowViewModel : ViewModelBase
     private string loginResult;
 
     private readonly string _username = "admin";
-    private readonly byte[] _savedSalt;
-    private readonly byte[] _savedHash;
-
-    public IRelayCommand SignInCommand { get; }
+    
+    
+    public RelayCommand SignInCommand { get; }
 
     public LoginWindowViewModel()
     {
-        (_savedHash, _savedSalt) = HashPassword("1234");
         SignInCommand = new RelayCommand(SignIn);
     }
-
+    
     private void SignIn()
     {
         if (UsernameInput != _username)
@@ -34,9 +35,14 @@ public partial class LoginWindowViewModel : ViewModelBase
             LoginResult = "Wrong username";
             return;
         }
+        UserIO userIO = new UserIO("users.json");
+        User user = userIO.CheckUser(UsernameInput);
+        
+        
 
-        bool isValid = VerifyPassword(PasswordInput, _savedHash, _savedSalt);
-
+        
+        bool isValid = VerifyPassword(PasswordInput, user.hash, user.salt);
+        
         LoginResult = isValid ? "Login SUCCESS" : "Wrong username or password";
     }
 
