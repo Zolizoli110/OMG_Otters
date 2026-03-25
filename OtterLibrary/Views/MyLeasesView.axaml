@@ -41,11 +41,19 @@
                         <TextBlock Margin="70,0,0,0" Text="{Binding Title}" Width="330" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1"/>
                         <TextBlock Margin="70,0,0,0" Text="{Binding Author}" Width="330" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="2"/>
                         <TextBlock Margin="70,0,0,0" Text="{Binding ISBN}" Width="330" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="3"/>
-                        <Button Height="100" Width="100" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="Return" Command="{Binding $parent[ItemsControl].((vm:MyLeasesViewModel)DataContext).Return}" CommandParameter="{Binding}" Grid.Column="4"/>
+                        <Button x:Name="ReturnBtn" Height="100" Width="100" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="Return" Command="{Binding $parent[ItemsControl].((vm:MyLeasesViewModel)DataContext).Return}" CommandParameter="{Binding}" Click="ReturnButton_Click" Grid.Column="4">
+                        </Button>
                     </Grid>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
+        <Popup x:Name="ReturnPopup"
+               Placement="Bottom">
+            <Border Background="LightBlue" Padding="10">
+                <TextBlock Text="Book Returned!" />
+            </Border>
+        </Popup>
+
     </StackPanel>
     </ScrollViewer>
 </UserControl>

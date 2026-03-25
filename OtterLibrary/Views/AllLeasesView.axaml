@@ -11,6 +11,10 @@
     </Design.DataContext>
     <ScrollViewer VerticalScrollBarVisibility="Auto">
     <StackPanel>
+        <TextBlock HorizontalAlignment="Center">
+			<Run Text="Current Books Borrowed:"></Run>
+            <Run Text="{Binding NumberBorrowedBooks}"></Run>
+        </TextBlock>
                 <Grid Margin="5" Background="Gray">
 	    				<Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
