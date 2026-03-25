@@ -1,0 +1,88 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:OtterLibrary.ViewModels"
+             xmlns:m="using:OtterLibrary.Models"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:DataType="vm:LibraryViewModel"
+             x:Class="OtterLibrary.Views.LibraryView">
+    <Design.DataContext>
+        <vm:LibraryViewModel />
+    </Design.DataContext>
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+            <TextBlock Text="Unfortunatelly there are no books in the library." HorizontalAlignment="Center" VerticalAlignment="Top" IsVisible="{Binding !Books.Count}"/>
+			<ItemsControl ItemsSource="{Binding Books}">
+                <ItemsControl.ItemsPanel>
+	        		<ItemsPanelTemplate>
+	        			<WrapPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" ItemWidth="220" ItemHeight="580"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate DataType="m:Book">
+                        <Border
+                            MaxWidth="200"
+                            Padding="10"
+                            Margin="10"
+                            BorderThickness="2"
+                            BorderBrush="Black">
+	        				<StackPanel>
+                                <Grid Height="200" Width="120">
+									<Image  
+                                       Stretch="UniformToFill"
+                                       Opacity="{Binding !Leased}"
+                                       Source="avares://OtterLibrary/Assets/1984.jpg"/>
+                                    <TextBlock Text="Unavailable" VerticalAlignment="Center" HorizontalAlignment="Center" Opacity="{Binding Leased}" FontSize="20" FontWeight="Bold" Foreground="Red"/>
+                                </Grid>
+                                <Separator Margin="-10,5,-10,5"/>
+	        				    <TextBox Text="{Binding Title}" TextWrapping="Wrap" ClipToBounds="True" Height="55" FontSize="18" FontWeight="Black" TextAlignment="Center" IsEnabled="{Binding IsEditing}"/>
+                                <TextBlock TextAlignment="Center" FontStyle="Italic" TextWrapping="Wrap" ClipToBounds="True" FontSize="12" Text="Written by" />
+                                <TextBox Text="{Binding Author}" TextWrapping="Wrap" ClipToBounds="True" FontWeight="DemiBold" FontSize="12" TextAlignment="Center" IsEnabled="{Binding IsEditing}"/>
+                                <TextBlock TextAlignment="Center" TextWrapping="Wrap" ClipToBounds="True" FontSize="12" Text="ISBN" />
+                                <TextBox Text="{Binding ISBN}" TextWrapping="Wrap" ClipToBounds="True" FontSize="12" TextAlignment="Center" IsEnabled="{Binding IsEditing}"/>
+                                <Separator Margin="-10,5,-10,5"/>
+                                <TextBlock TextAlignment="Center" FontSize="12" TextWrapping="Wrap" ClipToBounds="True" Text="Description:" TextDecorations="Underline"/>
+                                <TextBox Text="{Binding Description}" Height="115" TextWrapping="Wrap" ClipToBounds="True" FontSize="12" TextAlignment="Center" IsEnabled="{Binding IsEditing}"/>
+                                <Separator Margin="-10,5,-10,5"/>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="8" Margin="-10,0,0,0">
+                                    <Button Content="Delete" HorizontalAlignment="Center" Command="{Binding $parent[ItemsControl].((vm:LibraryViewModel)DataContext).Delete}" CommandParameter="{Binding}" IsVisible="{Binding $parent[ItemsControl].((vm:LibraryViewModel)DataContext).SeeLibrarianStuff}"/>
+                                    <Button Content="Borrow" IsEnabled="{Binding !Leased}" HorizontalAlignment="Center" Command="{Binding $parent[ItemsControl].((vm:LibraryViewModel)DataContext).Lease}" CommandParameter="{Binding}" IsVisible="{Binding $parent[ItemsControl].((vm:LibraryViewModel)DataContext).SeeMemberStuff}">
+										<Button.Flyout>
+											<Flyout Placement="Bottom">
+												<TextBlock Text="Book Borrowed!" Margin="10"/>
+                                            </Flyout>
+                                        </Button.Flyout>
+                                    </Button>
+                                    <Button Content="{Binding EditButtonText}" HorizontalAlignment="Center" Command="{Binding $parent[ItemsControl].((vm:LibraryViewModel)DataContext).Edit}" CommandParameter="{Binding}" IsVisible="{Binding $parent[ItemsControl].((vm:LibraryViewModel)DataContext).SeeLibrarianStuff}"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            <Border Width="220" Height="580" Margin="10" BorderThickness="2" BorderBrush="Gray" IsVisible="{Binding SeeLibrarianStuff}">
+				<StackPanel Spacing="10">
+                    <TextBlock Text="Add new book" HorizontalAlignment="Center" FontSize="15"/>
+                    <TextBlock Text="Title:" HorizontalAlignment="Center"/>
+                    <TextBox Text="{Binding newBook.Title}" TextWrapping="Wrap" ClipToBounds="True"/>
+                    <TextBlock Text="Author:" HorizontalAlignment="Center"/>
+                    <TextBox Text="{Binding newBook.Author}" TextWrapping="Wrap" ClipToBounds="True"/>
+                    <TextBlock Text="ISBN(13):" HorizontalAlignment="Center"/>
+                    <TextBox Text="{Binding newBook.ISBN}" TextWrapping="Wrap" ClipToBounds="True"/>
+                    <TextBlock Text="Description:" HorizontalAlignment="Center"/>
+                    <TextBox Text="{Binding newBook.Description}" Height="115" TextWrapping="Wrap" ClipToBounds="True"/>
+                    <TextBlock Text="Book.jpg name:" HorizontalAlignment="Center"/>
+                    <TextBox Text="{Binding newBook.Picture}" TextWrapping="Wrap" ClipToBounds="True"/>
+                    <Button Content="Add Book" HorizontalAlignment="Center" Command="{Binding Add}">
+						<Button.Flyout>
+							<Flyout Placement="Bottom">
+							    <TextBlock Text="Book Added!" Margin="10"/>
+                            </Flyout>
+                        </Button.Flyout>
+                    </Button>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>
