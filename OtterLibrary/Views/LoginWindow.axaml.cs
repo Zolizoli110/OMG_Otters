@@ -2,8 +2,11 @@ using Avalonia.Controls;
 using Avalonia.Interactivity;
 using System;
 using System.Security.Cryptography;
-namespace OtterLibrary.Views;
 using OtterLibrary.ViewModels;
+
+
+namespace OtterLibrary.Views;
+
 
 public partial class LoginWindow : Window
 {
