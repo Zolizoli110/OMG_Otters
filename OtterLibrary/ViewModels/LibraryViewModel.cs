@@ -161,16 +161,19 @@ namespace OtterLibrary.ViewModels
         }
         private void AddBook()
         {
-
-            Books.Add(new Book()
+            newBook = new Book()
             {
                 Title = newBook.Title,
                 Author = newBook.Author,
                 ISBN = newBook.ISBN,
                 Description = newBook.Description,
                 Picture = newBook.Picture,
-            });
-            newBook = new Book();
+            };
+            string newPicture = "avares://OtterLibrary/Assets/";
+            newPicture+=newBook.Picture;
+            newBook.Picture = newPicture;
+            newBook.ImageFromBinding = ImageHelper.LoadFromResource(new Uri(newBook.Picture));
+            Books.Add(newBook);
             OnPropertyChanged(nameof(newBook));
             BookIO bookIO = new BookIO("catalog.json");
             bookIO.WriteBook(Books);
