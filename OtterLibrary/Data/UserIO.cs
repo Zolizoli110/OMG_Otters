@@ -10,7 +10,6 @@ namespace OtterLibrary.Data;
 public class UserIO
 {
     private string filePath;
-
     public UserIO(string filePath)
     {
         this.filePath = filePath;
@@ -22,7 +21,8 @@ public class UserIO
         string json = sr.ReadToEnd();
         sr.Close();
         List<User> users = JsonSerializer.Deserialize<List<User>>(json) ?? new List<User>();
-        return users.FirstOrDefault(u => u.UserName == username);
+        User user = users.FirstOrDefault(u => u.UserName == username);
+        return user;
     }
 
     public void Write(string username, ObservableCollection<Book> borrowedBooks)

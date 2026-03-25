@@ -5,6 +5,7 @@ using OtterLibrary.Models;
 using System;
 using System.Security.Cryptography;
 namespace OtterLibrary.Views;
+using OtterLibrary.ViewModels;
 
 public partial class MainWindow : Window
 {

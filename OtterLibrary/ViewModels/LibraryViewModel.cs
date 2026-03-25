@@ -13,6 +13,7 @@ namespace OtterLibrary.ViewModels
 {
     public partial class LibraryViewModel : ViewModelBase , INotifyPropertyChanged
     {
+        public BookIO bookIO {  get; set; }
         public User user { get; }
         public bool SeeMemberStuff => user.Role == UserRole.Admin || user.Role == UserRole.Member;
         public bool SeeLibrarianStuff => user.Role == UserRole.Admin || user.Role == UserRole.Librarian;
@@ -25,7 +26,7 @@ namespace OtterLibrary.ViewModels
         public LibraryViewModel(User? user)
         {
             this.user = user;
-
+            bookIO = new BookIO("catalog.json");
             newBook = new Book()
             {
                 Author = "",
@@ -175,8 +176,7 @@ namespace OtterLibrary.ViewModels
             newBook.ImageFromBinding = ImageHelper.LoadFromResource(new Uri(newBook.Picture));
             Books.Add(newBook);
             OnPropertyChanged(nameof(newBook));
-            BookIO bookIO = new BookIO("catalog.json");
-            bookIO.WriteBook(Books);
+            bookIO.WriteBook(newBook);
         }
 
     }
