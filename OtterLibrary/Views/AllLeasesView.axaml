@@ -25,25 +25,27 @@
                         <TextBlock FontWeight="Bold" Text="ISBN" Width="400" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="3"/>
                         <TextBlock FontWeight="Bold" Text="Borrowed by User" Width="200" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="4"/>
                     </Grid>
-	    <ItemsControl ItemsSource="{Binding BorrowedBooks}">
-	    	<ItemsControl.ItemTemplate>
-	    		<DataTemplate>
-	    			<Grid Margin="5" ShowGridLines="True">
-	    				<Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-	    					<ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        <Image Height="100" Source="avares://OtterLibrary/Assets/1984.jpg" Grid.Column="0"/>
-                        <TextBlock Margin="70,0,0,0" Text="{Binding Title}" Width="330" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1"/>
-                        <TextBlock Margin="70,0,0,0" Text="{Binding Author}" Width="330" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="2"/>
-                        <TextBlock Margin="70,0,0,0" Text="{Binding ISBN}" Width="330" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="3"/>
-                        <TextBlock Margin="70,0,0,0" Text="{Binding LeasedTo.userName}" Width="330" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="4"/>
-                    </Grid>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+	        <ItemsControl ItemsSource="{Binding BorrowedBooks}">
+	        	<ItemsControl.ItemTemplate>
+	        		<DataTemplate>
+	        			<Grid Margin="5" ShowGridLines="True">
+	        				<Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+	        					<ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Image Height="100" Source="avares://OtterLibrary/Assets/1984.jpg" Grid.Column="0"/>
+                            <TextBlock Margin="70,0,0,0" Text="{Binding Title}" Width="330" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1"/>
+                            <TextBlock Margin="70,0,0,0" Text="{Binding Author}" Width="330" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="2"/>
+                            <TextBlock Margin="70,0,0,0" Text="{Binding ISBN}" Width="330" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="3"/>
+                            <TextBlock Margin="70,0,0,0" Text="{Binding LeasedTo.userName}" Width="330" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="4"/>
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
     </StackPanel>
 </UserControl>
