@@ -16,6 +16,7 @@ namespace OtterLibrary.Models
         [ObservableProperty]
         private bool _isEditing;
         public string EditButtonText => IsEditing ? "Save" : "Edit";
+        
         partial void OnIsEditingChanged(bool oldValue, bool newValue)
         {
             OnPropertyChanged(nameof(EditButtonText));
