@@ -1,0 +1,50 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             xmlns:vm="using:OtterLibrary.ViewModels"
+             xmlns:m="using:OtterLibrary.Models"
+             x:DataType="vm:MyLeasesViewModel"
+             x:Class="OtterLibrary.Views.MyLeasesView">
+    <Design.DataContext>
+        <vm:LibraryViewModel />
+    </Design.DataContext>
+    <StackPanel>
+                <Grid Margin="5" Background="Gray">
+	    				<Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+	    					<ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock FontWeight="Bold" Text="Image" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0"/>
+                        <TextBlock FontWeight="Bold" Text="Title" Width="400" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1"/>
+                        <TextBlock FontWeight="Bold" Text="Author" Width="400" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="2"/>
+                        <TextBlock FontWeight="Bold" Text="ISBN" Width="400" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="3"/>
+                        <TextBlock FontWeight="Bold" Text="Return Book" Width="200" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="4"/>
+                    </Grid>
+	    <ItemsControl ItemsSource="{Binding user.LeasedBooks}">
+	    	<ItemsControl.ItemTemplate>
+	    		<DataTemplate>
+	    			<Grid Margin="5" ShowGridLines="True">
+	    				<Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+	    					<ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Image Height="100" Source="avares://OtterLibrary/Assets/1984.jpg" Grid.Column="0"/>
+                        <TextBlock Margin="70,0,0,0" Text="{Binding Title}" Width="330" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1"/>
+                        <TextBlock Margin="70,0,0,0" Text="{Binding Author}" Width="330" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="2"/>
+                        <TextBlock Margin="70,0,0,0" Text="{Binding ISBN}" Width="330" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="3"/>
+                        <Button Height="100" Width="100" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="Return" Command="{Binding $parent[ItemsControl].((vm:MyLeasesViewModel)DataContext).Return}" CommandParameter="{Binding}" Grid.Column="4"/>
+                    </Grid>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </StackPanel>
+    
+</UserControl>
