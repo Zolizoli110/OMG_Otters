@@ -10,6 +10,7 @@
     <Design.DataContext>
         <vm:LibraryViewModel />
     </Design.DataContext>
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
     <StackPanel>
                 <Grid Margin="5" Background="Gray">
 	    				<Grid.ColumnDefinitions>
@@ -46,5 +47,5 @@
             </ItemsControl.ItemTemplate>
         </ItemsControl>
     </StackPanel>
-    
+    </ScrollViewer>
 </UserControl>

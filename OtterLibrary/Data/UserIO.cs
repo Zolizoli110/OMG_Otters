@@ -10,7 +10,6 @@ namespace OtterLibrary.Data;
 public class UserIO
 {
     private string filePath;
-
     public UserIO(string filePath)
     {
         this.filePath = filePath;

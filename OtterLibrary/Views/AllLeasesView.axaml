@@ -9,7 +9,7 @@
     <Design.DataContext>
         <vm:LibraryViewModel />
     </Design.DataContext>
-
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
     <StackPanel>
                 <Grid Margin="5" Background="Gray">
 	    				<Grid.ColumnDefinitions>
@@ -25,7 +25,7 @@
                         <TextBlock FontWeight="Bold" Text="ISBN" Width="400" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="3"/>
                         <TextBlock FontWeight="Bold" Text="Borrowed by User" Width="200" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="4"/>
                     </Grid>
-        <ScrollViewer VerticalScrollBarVisibility="Auto">
+        
 	        <ItemsControl ItemsSource="{Binding BorrowedBooks}">
 	        	<ItemsControl.ItemTemplate>
 	        		<DataTemplate>
@@ -46,6 +46,6 @@
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
-        </ScrollViewer>
     </StackPanel>
+        </ScrollViewer>
 </UserControl>
