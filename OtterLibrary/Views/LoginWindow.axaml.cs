@@ -14,6 +14,5 @@ public partial class LoginWindow : Window
     {
         InitializeComponent();
         DataContext = new LoginWindowViewModel();
-
     }
 }

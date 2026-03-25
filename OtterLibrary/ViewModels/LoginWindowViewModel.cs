@@ -4,6 +4,7 @@ using OtterLibrary.Data;
 using OtterLibrary.Models;
 using System;
 using System.Security.Cryptography;
+using System.Text;
 
 namespace OtterLibrary.ViewModels;
 
@@ -17,9 +18,6 @@ public partial class LoginWindowViewModel : ViewModelBase
 
     [ObservableProperty]
     private string loginResult;
-
-    private readonly string _username = "admin";
-    
     
     public RelayCommand SignInCommand { get; }
 
@@ -30,18 +28,13 @@ public partial class LoginWindowViewModel : ViewModelBase
     
     private void SignIn()
     {
-        if (UsernameInput != _username)
-        {
-            LoginResult = "Wrong username";
-            return;
-        }
         UserIO userIO = new UserIO("users.json");
         User user = userIO.CheckUser(UsernameInput);
         
+        byte[] hashBytes = Convert.FromBase64String(user.Hash);
+        byte[] saltBytes = Convert.FromBase64String(user.Salt);
         
-
-        
-        bool isValid = VerifyPassword(PasswordInput, user.hash, user.salt);
+        bool isValid = VerifyPassword(PasswordInput, hashBytes, saltBytes);
         
         LoginResult = isValid ? "Login SUCCESS" : "Wrong username or password";
     }
