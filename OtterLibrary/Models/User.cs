@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections.ObjectModel;
 
 namespace OtterLibrary.Models
 {
@@ -7,6 +7,6 @@ namespace OtterLibrary.Models
     {
         public string? userName {  get; set; }
         public UserRole role { get; set; }
-        public List<Book> LeasedBooks = new List<Book>();
+        public ObservableCollection<Book> LeasedBooks { get; } = new();
     }
 }

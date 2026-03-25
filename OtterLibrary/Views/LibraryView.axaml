@@ -12,6 +12,7 @@
     </Design.DataContext>
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <StackPanel>
+            <TextBlock Text="Unfortunatelly there are no books in the library." HorizontalAlignment="Center" VerticalAlignment="Top" IsVisible="{Binding !Books.Count}"/>
 			<ItemsControl ItemsSource="{Binding Books}">
                 <ItemsControl.ItemsPanel>
 	        		<ItemsPanelTemplate>
@@ -47,7 +48,13 @@
                                 <Separator Margin="-10,5,-10,5"/>
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="8" Margin="-10,0,0,0">
                                     <Button Content="Delete" HorizontalAlignment="Center" Command="{Binding $parent[ItemsControl].((vm:LibraryViewModel)DataContext).Delete}" CommandParameter="{Binding}" IsVisible="{Binding $parent[ItemsControl].((vm:LibraryViewModel)DataContext).SeeLibrarianStuff}"/>
-                                    <Button Content="Borrow" IsEnabled="{Binding !Leased}" HorizontalAlignment="Center" Command="{Binding $parent[ItemsControl].((vm:LibraryViewModel)DataContext).Lease}" CommandParameter="{Binding}" IsVisible="{Binding $parent[ItemsControl].((vm:LibraryViewModel)DataContext).SeeMemberStuff}"/>
+                                    <Button Content="Borrow" IsEnabled="{Binding !Leased}" HorizontalAlignment="Center" Command="{Binding $parent[ItemsControl].((vm:LibraryViewModel)DataContext).Lease}" CommandParameter="{Binding}" IsVisible="{Binding $parent[ItemsControl].((vm:LibraryViewModel)DataContext).SeeMemberStuff}">
+										<Button.Flyout>
+											<Flyout Placement="Bottom">
+												<TextBlock Text="Book Borrowed!" Margin="10"/>
+                                            </Flyout>
+                                        </Button.Flyout>
+                                    </Button>
                                     <Button Content="{Binding EditButtonText}" HorizontalAlignment="Center" Command="{Binding $parent[ItemsControl].((vm:LibraryViewModel)DataContext).Edit}" CommandParameter="{Binding}" IsVisible="{Binding $parent[ItemsControl].((vm:LibraryViewModel)DataContext).SeeLibrarianStuff}"/>
                                 </StackPanel>
                             </StackPanel>
@@ -68,7 +75,13 @@
                     <TextBox Text="{Binding newBook.Description}" Height="115" TextWrapping="Wrap" ClipToBounds="True"/>
                     <TextBlock Text="Book.jpg name:" HorizontalAlignment="Center"/>
                     <TextBox Text="{Binding newBook.Picture}" TextWrapping="Wrap" ClipToBounds="True"/>
-                    <Button Content="Add Book" HorizontalAlignment="Center" Command="{Binding Add}"/>
+                    <Button Content="Add Book" HorizontalAlignment="Center" Command="{Binding Add}">
+						<Button.Flyout>
+							<Flyout Placement="Bottom">
+							    <TextBlock Text="Book Added!" Margin="10"/>
+                            </Flyout>
+                        </Button.Flyout>
+                    </Button>
                 </StackPanel>
             </Border>
         </StackPanel>
