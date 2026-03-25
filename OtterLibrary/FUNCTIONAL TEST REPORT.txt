@@ -17,11 +17,11 @@ Steps:
 
 Expected Result:
 - The borrowed book should appear under "My Leases".
-- Book status should change to "Leased" in the catalog.
+- Book status should change to "Unavailable" in the catalog.
 
 Actual Result:
 - The book appeared under "My Leases".
-- Status in the catalog updated correctly to "Leased".
+- Status in the catalog updated correctly to "Unavailable".
 
 Conclusion: PASSED
 
@@ -59,6 +59,8 @@ Steps:
    - Title: "New Test Book"
    - Author: "Test Author"
    - ISBN: "123456"
+   - Description: "A book added during testing."
+   - Book.jpg name: "Dune.jpg"
 3. Saved the book.
 4. Logged in as "member" to confirm visibility.
 
@@ -78,7 +80,7 @@ TEST 4: Delete Book Test
 Steps:
 1. Logged in as "librarian".
 2. Selected the previously added test book.
-3. Clicked "Delete" and confirmed the action.
+3. Clicked "Delete".
 4. Checked both librarian and member catalogs.
 
 Expected Result:
@@ -97,7 +99,7 @@ Steps:
 1. Logged in as "member".
 2. Borrowed a book.
 3. Logged out and logged in as "librarian".
-4. Opened the "Active Leases" page.
+4. Opened the "All Leases" page.
 
 Expected Result:
 - The Active Loans list should show:
@@ -108,7 +110,7 @@ Actual Result:
 - Book appeared correctly under Active Leases.
 - Borrower name displayed.
 
-Conclusion: ✅ PASSED
+Conclusion: PASSED
 
 
 ============================================================
