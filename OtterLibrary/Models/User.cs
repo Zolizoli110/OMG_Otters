@@ -7,7 +7,7 @@ namespace OtterLibrary.Models
     {
         public string? UserName {  get; set; }
         public UserRole Role { get; set; }
-        public ObservableCollection<Book> LeasedBooks { get; } = new();
+        public ObservableCollection<Book> LeasedBooks { get; set; } = new();
 
         public string Hash { get; set; }
         public string Salt { get; set; }
