@@ -41,7 +41,6 @@ public class BookIO
             File.WriteAllText(filePath, "[]");
             return new List<Book>();
         }
-
     }
 
     public void WriteBook(List<Book> books)
