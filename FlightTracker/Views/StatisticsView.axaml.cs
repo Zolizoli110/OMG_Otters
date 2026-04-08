@@ -4,7 +4,7 @@ using Avalonia.Markup.Xaml;
 
 namespace FlightTracker.Views;
 
-public partial class StatisticsView : Window
+public partial class StatisticsView : UserControl
 {
     public StatisticsView()
     {

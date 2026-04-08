@@ -1,6 +1,7 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="using:FlightTracker.ViewModels"
+        xmlns:views="using:FlightTracker.Views"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
@@ -15,6 +16,19 @@
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
-    <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+    <TabControl Margin="0" Padding = "0">
 
+        <TabItem Header="Flight Map">
+            <views:FlightMap/>
+        </TabItem>
+
+        <TabItem Header="List of Airports">
+            <views:ListOfAirports/>
+        </TabItem>
+
+        <TabItem Header="Statistics">
+            <views:StatisticsView/>
+        </TabItem>
+
+    </TabControl>
 </Window>

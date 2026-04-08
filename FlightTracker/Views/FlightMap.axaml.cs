@@ -13,7 +13,7 @@ using Mapsui.Tiling;
 
 namespace FlightTracker.Views;
 
-public partial class FlightMap : Window
+public partial class FlightMap : UserControl
 {
     public FlightMap()
     {
