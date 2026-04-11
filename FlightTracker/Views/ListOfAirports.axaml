@@ -13,8 +13,36 @@
         <vm:ListOfAirportsViewModel/>
     </Design.DataContext>
 
-    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-        <TextBlock Text="Airpots: " FontSize="24"/>
-        <TextBlock Text="Status: " FontSize="18"/>
-    </StackPanel>
+    <DockPanel LastChildFill="True">
+        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="10" Spacing="10">
+            <TextBlock Text="List of Airports" FontSize="16"  FontWeight="Bold"/>
+            <ComboBox Width="200"
+            ItemsSource="{Binding Airports}"
+            SelectedItem="{Binding SelectedAirport}"
+            DisplayMemberBinding="{Binding Name}" />
+
+            <TextBlock Text="Filter by Status:" FontSize="16" FontWeight="Bold"/>
+            <RadioButton Content="Landed" GroupName="StatusFilter" IsChecked="{Binding ShowLanded}"/>
+            <RadioButton Content="Scheduled" GroupName="StatusFilter" IsChecked="{Binding ShowScheduled}"/>
+
+        </StackPanel>
+        <DataGrid ItemsSource="{Binding FilteredFlights}"
+                AutoGenerateColumns="False"
+                IsReadOnly="True"
+                DockPanel.Dock="Bottom">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Flight Number" Binding="{Binding FlightNumber}"/>
+                <DataGridTextColumn Header="Airline Name" Binding="{Binding AirlineName}"/>
+                <DataGridTextColumn Header="Airline Code" Binding="{Binding AirlineCode}"/>
+                <DataGridTextColumn Header="Departure Airport" Binding="{Binding DepartureAirport}"/>
+                <DataGridTextColumn Header="Arrival Airport" Binding="{Binding ArrivalAirport}"/>
+                <DataGridTextColumn Header="Scheduled Departure" Binding="{Binding ScheduledDeparture}"/>
+                <DataGridTextColumn Header="Scheduled Arrival" Binding="{Binding ScheduledArrival}"/>
+                <DataGridTextColumn Header="Aircraft Type" Binding="{Binding AircraftType}"/>
+                <DataGridTextColumn Header="Status" Binding="{Binding status}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        
+    </DockPanel>
 </UserControl>

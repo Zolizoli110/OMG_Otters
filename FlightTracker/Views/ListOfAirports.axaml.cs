@@ -7,5 +7,6 @@ public partial class ListOfAirports : UserControl
     public ListOfAirports()
     {
         InitializeComponent();
+        DataContext = new ListOfAirportsViewModel(); 
     }
 }
