@@ -1,5 +1,10 @@
-﻿using CommunityToolkit.Mvvm.Input;
+﻿using Avalonia.Media.Imaging;
+using CommunityToolkit.Mvvm.Input;
+using OtterLibrary.Data;
 using OtterLibrary.Models;
+using SkiaSharp;
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Input;
@@ -8,9 +13,11 @@ namespace OtterLibrary.ViewModels
 {
     public partial class LibraryViewModel : ViewModelBase , INotifyPropertyChanged
     {
+        public BookIO bookIO {  get; set; }
+        public UserIO userIO { get; set; }
         public User user { get; }
-        public bool SeeMemberStuff => user.role == UserRole.Admin || user.role == UserRole.Member;
-        public bool SeeLibrarianStuff => user.role == UserRole.Admin || user.role == UserRole.Librarian;
+        public bool SeeMemberStuff => user.Role == UserRole.Admin || user.Role == UserRole.Member;
+        public bool SeeLibrarianStuff => user.Role == UserRole.Admin || user.Role == UserRole.Librarian;
         public ObservableCollection<Book> Books { get; set; }
         public Book newBook { get; set; }
         public ICommand Lease {  get; }
@@ -20,7 +27,8 @@ namespace OtterLibrary.ViewModels
         public LibraryViewModel(User? user)
         {
             this.user = user;
-
+            bookIO = new BookIO("catalog.json");
+            userIO = new UserIO("user_catalog.json");
             newBook = new Book()
             {
                 Author = "",
@@ -30,15 +38,15 @@ namespace OtterLibrary.ViewModels
                 Picture = "",
             };
 
-            Books = new ObservableCollection<Book>
-            {
+            Books = new ObservableCollection<Book>();
+            /*{
                 new Book()
                 {
                     Title = "1984",
                     Author = "George Orwell",
                     ISBN = "978-1847498571",
                     Description = "Nineteen Eight-Four is George Orwell's terrifying vision of a totalitarian future in which everything and everyone is slave to a tyrannical regime.",
-                    Picture = "avares://OtterLibrary/Assets/1984.jpg",
+                    Picture = "avares://OtterLibrary/Assets/1984.jpg"
                 },
                 new Book()
                 {
@@ -127,9 +135,20 @@ namespace OtterLibrary.ViewModels
                     ISBN = "978-1546159544",
                     Description = "Against all odds, Katniss Everdeen has won the annual Hunger Games with fellow district tribute Peeta Mellark.",
                     Picture = "avares://OtterLibrary/Assets/Catching Fire.jpg"
-                },
-
-            };
+                }
+            };*/
+            Books = bookIO.ReadBook();
+            foreach(Book book in Books)
+            {
+                if(book.Picture!="")
+                {
+                    book.ImageFromBinding = ImageHelper.LoadFromResource(new Uri(book.Picture));
+                }
+                if(book.LeasedTo == user.UserName)
+                {
+                    user.LeasedBooks.Add(book);
+                }
+            }
             Lease = new RelayCommand<Book>(LeaseBook);
             Edit = new RelayCommand<Book>(EditBook);
             Delete = new RelayCommand<Book>(DeleteBook);
@@ -137,33 +156,56 @@ namespace OtterLibrary.ViewModels
         }
         private void LeaseBook(Book? book)
         {
+            book.ImageFromBinding = ImageHelper.LoadFromResource(new Uri(book.Picture));
             user.LeasedBooks.Add(book);
-            book.LeasedTo = user;
+            book.LeasedTo = user.UserName;
             book.Leased = true;
             OnPropertyChanged(nameof(book));
+            bookIO.Save(Books);
+            //userIO.Borrow(user.UserName,Books);
         }
         private void EditBook(Book? book)
         {
             if (book == null) return;
-            book.IsEditing = !book.IsEditing;
+            if(book.IsEditing)
+            {
+                book.IsEditing = false;
+                bookIO.Save(Books);
+            }
+            else
+            {
+                book.IsEditing = true;
+            }
         }
         private void DeleteBook(Book? book)
         {
             Books.Remove(book);
+            bookIO.Save(Books);
         }
         private void AddBook()
         {
-
-            Books.Add(new Book()
+            if(newBook==null) return;
+            Book BookToAdd = new Book()
             {
                 Title = newBook.Title,
                 Author = newBook.Author,
                 ISBN = newBook.ISBN,
                 Description = newBook.Description,
                 Picture = newBook.Picture,
-            });
+                Leased = false,
+                LeasedTo = ""
+            };
+            if (BookToAdd.Picture != "" && BookToAdd.Picture!=null)
+            {
+                string newPicture = "avares://OtterLibrary/Assets/";
+                newPicture += newBook.Picture;
+                BookToAdd.Picture = newPicture;
+                BookToAdd.ImageFromBinding = ImageHelper.LoadFromResource(new Uri(BookToAdd.Picture));
+            }
+            Books.Add(BookToAdd);
             newBook = new Book();
             OnPropertyChanged(nameof(newBook));
+            bookIO.Save(Books);
         }
 
     }

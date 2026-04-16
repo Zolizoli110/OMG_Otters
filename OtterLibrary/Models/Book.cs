@@ -1,4 +1,8 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using Avalonia.Media.Imaging;
+using CommunityToolkit.Mvvm.ComponentModel;
+using OtterLibrary.Data;
+using System;
+using System.Text.Json.Serialization;
 
 namespace OtterLibrary.Models
 {
@@ -12,10 +16,14 @@ namespace OtterLibrary.Models
         [ObservableProperty]
         private bool _leased;
         [ObservableProperty]
-        private User? _leasedTo;
+        private string _leasedTo;
         [ObservableProperty]
         private bool _isEditing;
         public string EditButtonText => IsEditing ? "Save" : "Edit";
+        [JsonIgnore]
+        public Bitmap? ImageFromBinding { get; set; }
+
+
         partial void OnIsEditingChanged(bool oldValue, bool newValue)
         {
             OnPropertyChanged(nameof(EditButtonText));

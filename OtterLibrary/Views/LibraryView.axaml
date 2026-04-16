@@ -32,7 +32,7 @@
 									<Image  
                                        Stretch="UniformToFill"
                                        Opacity="{Binding !Leased}"
-                                       Source="avares://OtterLibrary/Assets/1984.jpg"/>
+                                       Source="{Binding ImageFromBinding}"/>
                                     <TextBlock Text="Unavailable" VerticalAlignment="Center" HorizontalAlignment="Center" Opacity="{Binding Leased}" FontSize="20" FontWeight="Bold" Foreground="Red"/>
                                 </Grid>
                                 <Separator Margin="-10,5,-10,5"/>

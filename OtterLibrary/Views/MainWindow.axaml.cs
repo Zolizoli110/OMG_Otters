@@ -5,6 +5,7 @@ using OtterLibrary.Models;
 using System;
 using System.Security.Cryptography;
 namespace OtterLibrary.Views;
+using OtterLibrary.ViewModels;
 
 public partial class MainWindow : Window
 {
@@ -18,8 +19,8 @@ public partial class MainWindow : Window
         {
             user = new User()
             {
-                userName = "test",
-                role = UserRole.Admin
+                UserName = "test",
+                Role = UserRole.Admin
             };
         }
         InitializeComponent();

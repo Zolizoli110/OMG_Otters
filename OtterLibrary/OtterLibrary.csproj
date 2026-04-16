@@ -28,5 +28,8 @@
       <Compile Update="Views\MyLeasesView.axaml.cs">
         <DependentUpon>MyLeasesView.axaml</DependentUpon>
       </Compile>
+      <Compile Update="Views\LoginWindow.axaml.cs">
+        <DependentUpon>LoginWindow.axaml</DependentUpon>
+      </Compile>
     </ItemGroup>
 </Project>

@@ -12,16 +12,20 @@ namespace OtterLibrary.ViewModels
         public string PageTitle { get; } = "All Currently Leased Books";
 
         public ObservableCollection<Book> Books { get; set; }
-        public IEnumerable<Book> BorrowedBooks => Books.Where(b => b.LeasedTo != null);
+        public IEnumerable<Book> BorrowedBooks => Books.Where(b => b.LeasedTo != "");
+        public int NumberBorrowedBooks => BorrowedBooks.Count();
         public AllLeasesViewModel(ObservableCollection<Book> Books)
         {
             this.Books = Books;
-
             foreach(Book book in Books)
             {
                 book.PropertyChanged += (s, e) =>
                 {
-                    if (e.PropertyName == nameof(Book.LeasedTo)) OnPropertyChanged(nameof(BorrowedBooks));
+                    if (e.PropertyName == nameof(Book.LeasedTo))
+                    {
+                        OnPropertyChanged(nameof(BorrowedBooks));
+                        OnPropertyChanged(nameof(NumberBorrowedBooks));
+                    }
                 };
             }
         }
